@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "on-secondary-fixed": "#002113",
+          "surface-tint": "#006c4a",
+          "primary-container": "#00855d",
+          "primary": "#006948",
+          "error": "#ba1a1a",
+          "tertiary": "#505f59",
+          "outline": "#6d7a72",
+          "secondary-fixed": "#6ffbbe",
+          "on-background": "#191c1e",
+          "inverse-surface": "#2d3133",
+          "tertiary-container": "#687872",
+          "surface-container-high": "#e6e8ea",
+          "primary-fixed-dim": "#68dba9",
+          "on-tertiary-fixed": "#101e1a",
+          "surface-variant": "#e0e3e5",
+          "on-error": "#ffffff",
+          "on-secondary-container": "#00714d",
+          "tertiary-fixed": "#d5e6df",
+          "secondary-fixed-dim": "#4edea3",
+          "surface-dim": "#d8dadc",
+          "on-primary-container": "#f5fff7",
+          "on-error-container": "#93000a",
+          "on-primary-fixed-variant": "#005137",
+          "on-tertiary-fixed-variant": "#3b4a44",
+          "on-primary": "#ffffff",
+          "error-container": "#ffdad6",
+          "surface-container-highest": "#e0e3e5",
+          "surface-bright": "#f7f9fb",
+          "on-secondary": "#ffffff",
+          "secondary": "#006c49",
+          "background": "#f7f9fb",
+          "surface-container-low": "#f2f4f6",
+          "on-tertiary-container": "#f4fff9",
+          "on-primary-fixed": "#002114",
+          "inverse-primary": "#68dba9",
+          "on-secondary-fixed-variant": "#005236",
+          "tertiary-fixed-dim": "#bacac3",
+          "primary-fixed": "#85f8c4",
+          "on-surface-variant": "#3d4a42",
+          "surface": "#f7f9fb",
+          "outline-variant": "#bccac0",
+          "secondary-container": "#6cf8bb",
+          "surface-container": "#eceef0",
+          "on-tertiary": "#ffffff",
+          "inverse-on-surface": "#eff1f3",
+          "on-surface": "#191c1e",
+          "surface-container-lowest": "#ffffff"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "space-sm": "0.5rem",
+          "space-xl": "2.5rem",
+          "margin": "2rem",
+          "gutter": "1.5rem",
+          "space-lg": "1.5rem",
+          "space-xs": "0.25rem",
+          "space-md": "1rem"
+        },
+        "fontFamily": {
+          "headline-xl": [
+            "Manrope"
+          ],
+          "body-md": [
+            "Inter"
+          ],
+          "label-sm": [
+            "Inter"
+          ],
+          "headline-sm": [
+            "Manrope"
+          ],
+          "body-lg": [
+            "Inter"
+          ],
+          "body-sm": [
+            "Inter"
+          ],
+          "label-md": [
+            "Inter"
+          ],
+          "headline-md": [
+            "Manrope"
+          ],
+          "headline-lg": [
+            "Manrope"
+          ]
+        },
+        "fontSize": {
+          "headline-xl": [
+            "40px",
+            {
+              "lineHeight": "48px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "700"
+            }
+          ],
+          "body-md": [
+            "14px",
+            {
+              "lineHeight": "20px",
+              "fontWeight": "400"
+            }
+          ],
+          "label-sm": [
+            "12px",
+            {
+              "lineHeight": "16px",
+              "fontWeight": "500"
+            }
+          ],
+          "headline-sm": [
+            "18px",
+            {
+              "lineHeight": "24px",
+              "fontWeight": "600"
+            }
+          ],
+          "body-lg": [
+            "16px",
+            {
+              "lineHeight": "24px",
+              "fontWeight": "400"
+            }
+          ],
+          "body-sm": [
+            "12px",
+            {
+              "lineHeight": "16px",
+              "fontWeight": "400"
+            }
+          ],
+          "label-md": [
+            "14px",
+            {
+              "lineHeight": "20px",
+              "fontWeight": "500"
+            }
+          ],
+          "headline-md": [
+            "24px",
+            {
+              "lineHeight": "32px",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-lg": [
+            "32px",
+            {
+              "lineHeight": "40px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "600"
+            }
+          ]
+        }
+      },
+    },
+  }
+</script><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 inset-x-0 z-50 bg-surface/80 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-gutter flex items-center justify-between"><div class="flex flex-col"><span class="text-body-sm text-outline">Log</span><span class="text-headline-sm text-on-surface">Hello, Alex</span></div><div class="flex items-center gap-space-sm"><button class="w-11 h-11 flex items-center justify-center rounded-full bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span></button><div class="w-11 h-11 rounded-full bg-primary flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-on-primary text-[20px]">person</span></div></div></div></header><main class="flex flex-col relative w-full px-gutter pt-16 pb-24 bg-surface flex-grow"><div class="flex flex-col w-full gap-space-lg pb-12">
+<!-- Search and Header Action Row -->
+<div class="flex flex-col gap-space-md">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-4 text-outline text-[20px]">search</span>
+<input class="w-full h-12 pl-12 pr-12 bg-surface-container-low rounded-xl text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/20 text-body-md transition-all shadow-sm" id="foodSearchInput" placeholder="Search food (e.g., Dal, Paneer, Oats)..." type="text"/>
+<button class="absolute right-3 w-8 h-8 flex items-center justify-center rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface-variant transition-colors" title="Scan barcode">
+<span class="material-symbols-outlined text-[18px]">barcode_scanner</span>
+</button>
+</div>
+<!-- Category Filter Pills -->
+<div class="flex gap-space-sm overflow-x-auto pb-1 no-scrollbar -mx-gutter px-gutter">
+<button class="category-pill px-4 py-2 rounded-full bg-primary text-on-primary text-label-md font-medium whitespace-nowrap shadow-sm transition-all" data-category="all">All Foods</button>
+<button class="category-pill px-4 py-2 rounded-full bg-surface-container text-on-surface-variant text-label-md font-medium whitespace-nowrap hover:bg-surface-container-high transition-all" data-category="indian">Indian</button>
+<button class="category-pill px-4 py-2 rounded-full bg-surface-container text-on-surface-variant text-label-md font-medium whitespace-nowrap hover:bg-surface-container-high transition-all" data-category="breakfast">Breakfast</button>
+<button class="category-pill px-4 py-2 rounded-full bg-surface-container text-on-surface-variant text-label-md font-medium whitespace-nowrap hover:bg-surface-container-high transition-all" data-category="lunch">Lunch</button>
+<button class="category-pill px-4 py-2 rounded-full bg-surface-container text-on-surface-variant text-label-md font-medium whitespace-nowrap hover:bg-surface-container-high transition-all" data-category="dinner">Dinner</button>
+<button class="category-pill px-4 py-2 rounded-full bg-surface-container text-on-surface-variant text-label-md font-medium whitespace-nowrap hover:bg-surface-container-high transition-all" data-category="snacks">Snacks</button>
+<button class="category-pill px-4 py-2 rounded-full bg-surface-container text-on-surface-variant text-label-md font-medium whitespace-nowrap hover:bg-surface-container-high transition-all" data-category="protein">Protein</button>
+</div>
+</div>
+<!-- Tab Selector: Explore vs Favorites -->
+<div class="flex bg-surface-container-low p-1 rounded-xl">
+<button class="flex-1 py-2 text-label-md font-medium rounded-lg bg-surface text-on-surface shadow-sm transition-all" id="tabExplore">Explore &amp; Log</button>
+<button class="flex-1 py-2 text-label-md font-medium rounded-lg text-on-surface-variant hover:text-on-surface transition-all" id="tabFavorites">My Favorites (3)</button>
+</div>
+<!-- Main Food List Container -->
+<div class="flex flex-col gap-space-md" id="foodListContainer">
+<!-- Food Item Card 1 -->
+<div class="food-card bg-surface-container-lowest p-4 rounded-xl shadow-[0_4px_20px_rgba(5,150,105,0.04)] flex flex-col gap-space-md transition-all" data-c="35" data-cals="320" data-category="indian protein" data-f="14" data-name="Dal Makhani" data-p="12">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed font-headline-sm">
+<span class="material-symbols-outlined text-[24px]">soup_kitchen</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="text-headline-sm text-on-surface">Dal Makhani</h3>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-label-sm">Indian</span>
+</div>
+<p class="text-body-sm text-outline">Rich black lentil curry</p>
+</div>
+</div>
+<button class="fav-btn text-outline hover:text-primary transition-colors p-2" title="Save as Favorite">
+<span class="material-symbols-outlined text-[22px]">favorite</span>
+</button>
+</div>
+<!-- Macros & Serving Adjuster -->
+<div class="flex flex-col gap-space-sm bg-surface-container-low p-3 rounded-lg">
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-outline">Per serving (1 bowl • 250g)</span>
+<span class="text-primary font-medium">320 kcal</span>
+</div>
+<div class="flex items-center justify-between text-label-sm">
+<div class="flex gap-3">
+<span class="text-on-surface-variant">P: <strong class="text-on-surface">12g</strong></span>
+<span class="text-on-surface-variant">C: <strong class="text-on-surface">35g</strong></span>
+<span class="text-on-surface-variant">F: <strong class="text-on-surface">14g</strong></span>
+</div>
+<!-- Serving Adjuster Controls -->
+<div class="flex items-center gap-2 bg-surface px-2 py-1 rounded-md shadow-sm">
+<button class="qty-minus text-outline hover:text-on-surface font-bold px-1">-</button>
+<span class="qty-val text-on-surface font-medium">1</span>
+<button class="qty-plus text-outline hover:text-on-surface font-bold px-1">+</button>
+<span class="text-outline text-label-sm">bowl</span>
+</div>
+</div>
+</div>
+<!-- Add Action -->
+<button class="add-meal-btn w-full h-11 bg-primary text-on-primary rounded-lg text-label-md font-medium flex items-center justify-center gap-2 shadow-sm hover:bg-primary-container transition-all">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+        Add to Meal Log
+      </button>
+</div>
+<!-- Food Item Card 2 -->
+<div class="food-card bg-surface-container-lowest p-4 rounded-xl shadow-[0_4px_20px_rgba(5,150,105,0.04)] flex flex-col gap-space-md transition-all" data-c="45" data-cals="250" data-category="breakfast" data-f="4" data-name="Rolled Oats with Berries" data-p="8">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed font-headline-sm">
+<span class="material-symbols-outlined text-[24px]">4k</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="text-headline-sm text-on-surface">Rolled Oats with Berries</h3>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-label-sm">Breakfast</span>
+</div>
+<p class="text-body-sm text-outline">High fiber energy start</p>
+</div>
+</div>
+<button class="fav-btn text-outline hover:text-primary transition-colors p-2" title="Save as Favorite">
+<span class="material-symbols-outlined text-[22px]">favorite</span>
+</button>
+</div>
+<div class="flex flex-col gap-space-sm bg-surface-container-low p-3 rounded-lg">
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-outline">Per serving (1 cup • 100g)</span>
+<span class="text-primary font-medium">250 kcal</span>
+</div>
+<div class="flex items-center justify-between text-label-sm">
+<div class="flex gap-3">
+<span class="text-on-surface-variant">P: <strong class="text-on-surface">8g</strong></span>
+<span class="text-on-surface-variant">C: <strong class="text-on-surface">45g</strong></span>
+<span class="text-on-surface-variant">F: <strong class="text-on-surface">4g</strong></span>
+</div>
+<div class="flex items-center gap-2 bg-surface px-2 py-1 rounded-md shadow-sm">
+<button class="qty-minus text-outline hover:text-on-surface font-bold px-1">-</button>
+<span class="qty-val text-on-surface font-medium">1</span>
+<button class="qty-plus text-outline hover:text-on-surface font-bold px-1">+</button>
+<span class="text-outline text-label-sm">cup</span>
+</div>
+</div>
+</div>
+<button class="add-meal-btn w-full h-11 bg-primary text-on-primary rounded-lg text-label-md font-medium flex items-center justify-center gap-2 shadow-sm hover:bg-primary-container transition-all">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+        Add to Meal Log
+      </button>
+</div>
+<!-- Food Item Card 3 -->
+<div class="food-card bg-surface-container-lowest p-4 rounded-xl shadow-[0_4px_20px_rgba(5,150,105,0.04)] flex flex-col gap-space-md transition-all" data-c="0" data-cals="165" data-category="protein lunch dinner" data-f="3.6" data-name="Grilled Chicken Breast" data-p="31">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed font-headline-sm">
+<span class="material-symbols-outlined text-[24px]">kebab_dining</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="text-headline-sm text-on-surface">Grilled Chicken Breast</h3>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-label-sm">Protein</span>
+</div>
+<p class="text-body-sm text-outline">Lean source of high-quality protein</p>
+</div>
+</div>
+<button class="fav-btn text-outline hover:text-primary transition-colors p-2" title="Save as Favorite">
+<span class="material-symbols-outlined text-[22px]">favorite</span>
+</button>
+</div>
+<div class="flex flex-col gap-space-sm bg-surface-container-low p-3 rounded-lg">
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-outline">Per serving (100g)</span>
+<span class="text-primary font-medium">165 kcal</span>
+</div>
+<div class="flex items-center justify-between text-label-sm">
+<div class="flex gap-3">
+<span class="text-on-surface-variant">P: <strong class="text-on-surface">31g</strong></span>
+<span class="text-on-surface-variant">C: <strong class="text-on-surface">0g</strong></span>
+<span class="text-on-surface-variant">F: <strong class="text-on-surface">3.6g</strong></span>
+</div>
+<div class="flex items-center gap-2 bg-surface px-2 py-1 rounded-md shadow-sm">
+<button class="qty-minus text-outline hover:text-on-surface font-bold px-1">-</button>
+<span class="qty-val text-on-surface font-medium">100</span>
+<button class="qty-plus text-outline hover:text-on-surface font-bold px-1">+</button>
+<span class="text-outline text-label-sm">grams</span>
+</div>
+</div>
+</div>
+<button class="add-meal-btn w-full h-11 bg-primary text-on-primary rounded-lg text-label-md font-medium flex items-center justify-center gap-2 shadow-sm hover:bg-primary-container transition-all">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+        Add to Meal Log
+      </button>
+</div>
+<!-- Food Item Card 4 -->
+<div class="food-card bg-surface-container-lowest p-4 rounded-xl shadow-[0_4px_20px_rgba(5,150,105,0.04)] flex flex-col gap-space-md transition-all" data-c="6" data-cals="290" data-category="indian protein" data-f="22" data-name="Paneer Tikka" data-p="18">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed font-headline-sm">
+<span class="material-symbols-outlined text-[24px]">nutrition</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="text-headline-sm text-on-surface">Paneer Tikka</h3>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-label-sm">Indian</span>
+</div>
+<p class="text-body-sm text-outline">Spiced grilled cottage cheese cubes</p>
+</div>
+</div>
+<button class="fav-btn text-outline hover:text-primary transition-colors p-2" title="Save as Favorite">
+<span class="material-symbols-outlined text-[22px]">favorite</span>
+</button>
+</div>
+<div class="flex flex-col gap-space-sm bg-surface-container-low p-3 rounded-lg">
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-outline">Per serving (150g)</span>
+<span class="text-primary font-medium">290 kcal</span>
+</div>
+<div class="flex items-center justify-between text-label-sm">
+<div class="flex gap-3">
+<span class="text-on-surface-variant">P: <strong class="text-on-surface">18g</strong></span>
+<span class="text-on-surface-variant">C: <strong class="text-on-surface">6g</strong></span>
+<span class="text-on-surface-variant">F: <strong class="text-on-surface">22g</strong></span>
+</div>
+<div class="flex items-center gap-2 bg-surface px-2 py-1 rounded-md shadow-sm">
+<button class="qty-minus text-outline hover:text-on-surface font-bold px-1">-</button>
+<span class="qty-val text-on-surface font-medium">150</span>
+<button class="qty-plus text-outline hover:text-on-surface font-bold px-1">+</button>
+<span class="text-outline text-label-sm">grams</span>
+</div>
+</div>
+</div>
+<button class="add-meal-btn w-full h-11 bg-primary text-on-primary rounded-lg text-label-md font-medium flex items-center justify-center gap-2 shadow-sm hover:bg-primary-container transition-all">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+        Add to Meal Log
+      </button>
+</div>
+<!-- Food Item Card 5 -->
+<div class="food-card bg-surface-container-lowest p-4 rounded-xl shadow-[0_4px_20px_rgba(5,150,105,0.04)] flex flex-col gap-space-md transition-all" data-c="1" data-cals="140" data-category="breakfast snacks" data-f="10" data-name="Whole Eggs" data-p="12">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed font-headline-sm">
+<span class="material-symbols-outlined text-[24px]">egg</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="text-headline-sm text-on-surface">Whole Eggs</h3>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-label-sm">Breakfast</span>
+</div>
+<p class="text-body-sm text-outline">Boiled or poached whole eggs</p>
+</div>
+</div>
+<button class="fav-btn text-outline hover:text-primary transition-colors p-2" title="Save as Favorite">
+<span class="material-symbols-outlined text-[22px]">favorite</span>
+</button>
+</div>
+<div class="flex flex-col gap-space-sm bg-surface-container-low p-3 rounded-lg">
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-outline">Per serving (2 pieces)</span>
+<span class="text-primary font-medium">140 kcal</span>
+</div>
+<div class="flex items-center justify-between text-label-sm">
+<div class="flex gap-3">
+<span class="text-on-surface-variant">P: <strong class="text-on-surface">12g</strong></span>
+<span class="text-on-surface-variant">C: <strong class="text-on-surface">1g</strong></span>
+<span class="text-on-surface-variant">F: <strong class="text-on-surface">10g</strong></span>
+</div>
+<div class="flex items-center gap-2 bg-surface px-2 py-1 rounded-md shadow-sm">
+<button class="qty-minus text-outline hover:text-on-surface font-bold px-1">-</button>
+<span class="qty-val text-on-surface font-medium">2</span>
+<button class="qty-plus text-outline hover:text-on-surface font-bold px-1">+</button>
+<span class="text-outline text-label-sm">piece</span>
+</div>
+</div>
+</div>
+<button class="add-meal-btn w-full h-11 bg-primary text-on-primary rounded-lg text-label-md font-medium flex items-center justify-center gap-2 shadow-sm hover:bg-primary-container transition-all">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+        Add to Meal Log
+      </button>
+</div>
+</div>
+<!-- Empty State Container (Hidden by default, can be toggled or styled) -->
+<div class="hidden flex-col items-center justify-center py-12 px-6 text-center gap-space-md" id="emptyState">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center text-outline">
+<span class="material-symbols-outlined text-[32px]">search_off</span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<h3 class="text-headline-sm text-on-surface">No matching foods found</h3>
+<p class="text-body-sm text-outline max-w-xs">We couldn't find anything matching your search. Try adjusting keywords or add it manually.</p>
+</div>
+<button class="mt-space-sm px-6 py-3 bg-primary text-on-primary rounded-xl text-label-md font-medium shadow-sm hover:bg-primary-container transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+      Create Custom Food
+    </button>
+</div>
+<!-- Manual Entry Floating Banner / Trigger Card -->
+<div class="bg-gradient-to-br from-primary-container/10 via-surface-container-low to-secondary-container/10 p-4 rounded-xl flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">edit_note</span>
+</div>
+<div>
+<h4 class="text-label-md font-medium text-on-surface">Can't find your exact meal?</h4>
+<p class="text-body-sm text-outline">Log macros or ingredients manually in seconds.</p>
+</div>
+</div>
+<button class="px-4 py-2 bg-surface text-primary rounded-lg text-label-md font-medium shadow-sm hover:bg-surface-container transition-all">
+      Manual Add
+    </button>
+</div>
+<!-- Notification Toast (Hidden initially) -->
+<div class="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-inverse-surface text-inverse-on-surface px-4 py-3 rounded-xl shadow-lg flex items-center gap-3 transition-all duration-300 opacity-0 pointer-events-none" id="toastNotification">
+<span class="material-symbols-outlined text-secondary-fixed text-[20px]">check_circle</span>
+<span class="text-label-md" id="toastMessage">Added to your meal log!</span>
+</div>
+<script>
+    // Client-side interactions for search, filters, quantity adjusters, favorites, and tabs
+    const searchInput = document.getElementById('foodSearchInput');
+    const foodCards = document.querySelectorAll('.food-card');
+    const categoryPills = document.querySelectorAll('.category-pill');
+    const emptyState = document.getElementById('emptyState');
+    const foodListContainer = document.getElementById('foodListContainer');
+    const tabExplore = document.getElementById('tabExplore');
+    const tabFavorites = document.getElementById('tabFavorites');
+    const toast = document.getElementById('toastNotification');
+    const toastMessage = document.getElementById('toastMessage');
+
+    let currentCategory = 'all';
+    let currentTab = 'explore';
+
+    // Search filter function
+    function filterFoods() {
+      const query = searchInput.value.toLowerCase().trim();
+      let visibleCount = 0;
+
+      foodCards.forEach(card => {
+        const name = card.getAttribute('data-name').toLowerCase();
+        const categories = card.getAttribute('data-category');
+        const isFav = card.classList.contains('is-favorite');
+
+        const matchesSearch = name.includes(query);
+        const matchesCategory = currentCategory === 'all' || categories.includes(currentCategory);
+        const matchesTab = currentTab === 'explore' || (currentTab === 'favorites' && isFav);
+
+        if (matchesSearch && matchesCategory && matchesTab) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (visibleCount === 0) {
+        emptyState.style.display = 'flex';
+      } else {
+        emptyState.style.display = 'none';
+      }
+    }
+
+    searchInput.addEventListener('input', filterFoods);
+
+    // Category pill filtering
+    categoryPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        categoryPills.forEach(p => {
+          p.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+          p.classList.add('bg-surface-container', 'text-on-surface-variant');
+        });
+        pill.classList.remove('bg-surface-container', 'text-on-surface-variant');
+        pill.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+
+        currentCategory = pill.getAttribute('data-category');
+        filterFoods();
+      });
+    });
+
+    // Tab switching
+    tabExplore.addEventListener('click', () => {
+      currentTab = 'explore';
+      tabExplore.className = "flex-1 py-2 text-label-md font-medium rounded-lg bg-surface text-on-surface shadow-sm transition-all";
+      tabFavorites.className = "flex-1 py-2 text-label-md font-medium rounded-lg text-on-surface-variant hover:text-on-surface transition-all";
+      filterFoods();
+    });
+
+    tabFavorites.addEventListener('click', () => {
+      currentTab = 'favorites';
+      tabFavorites.className = "flex-1 py-2 text-label-md font-medium rounded-lg bg-surface text-on-surface shadow-sm transition-all";
+      tabExplore.className = "flex-1 py-2 text-label-md font-medium rounded-lg text-on-surface-variant hover:text-on-surface transition-all";
+      filterFoods();
+    });
+
+    // Quantity Increment / Decrement
+    foodCards.forEach(card => {
+      const minusBtn = card.querySelector('.qty-minus');
+      const plusBtn = card.querySelector('.qty-plus');
+      const qtyValSpan = card.querySelector('.qty-val');
+      const favBtn = card.querySelector('.fav-btn');
+      const addBtn = card.querySelector('.add-meal-btn');
+
+      minusBtn.addEventListener('click', () => {
+        let val = parseInt(qtyValSpan.textContent);
+        if (val > 1) {
+          qtyValSpan.textContent = val - 1;
+        }
+      });
+
+      plusBtn.addEventListener('click', () => {
+        let val = parseInt(qtyValSpan.textContent);
+        qtyValSpan.textContent = val + 1;
+      });
+
+      // Favorite toggle
+      favBtn.addEventListener('click', () => {
+        card.classList.toggle('is-favorite');
+        const icon = favBtn.querySelector('span');
+        if (card.classList.contains('is-favorite')) {
+          icon.style.fontVariationSettings = "'FILL' 1";
+          icon.classList.remove('text-outline');
+          icon.classList.add('text-error');
+          showToast('Added to favorites!');
+        } else {
+          icon.style.fontVariationSettings = "'FILL' 0";
+          icon.classList.remove('text-error');
+          icon.classList.add('text-outline');
+          showToast('Removed from favorites');
+        }
+      });
+
+      // Add to Meal
+      addBtn.addEventListener('click', () => {
+        const foodName = card.getAttribute('data-name');
+        showToast(`Successfully logged ${foodName}!`);
+      });
+    });
+
+    // Toast helper
+    function showToast(msg) {
+      toastMessage.textContent = msg;
+      toast.style.opacity = '1';
+      toast.style.transform = 'translate(-50%, 0)';
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translate(-50%, 10px)';
+      }, 2500);
+    }
+  </script>
+</div></main><nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-1px_8px_rgba(0,0,0,0.04)]" data-active-classes="text-primary font-medium"><div class="flex justify-around items-center h-20 px-space-sm"><a class="flex flex-col items-center justify-center gap-space-xs w-14 h-14 text-on-surface-variant hover:text-primary transition-all" data-path="home" href="#"><span class="material-symbols-outlined text-[24px]">home</span><span class="text-label-sm">Home</span></a><a aria-current="page" class="flex flex-col items-center justify-center gap-space-xs w-14 h-14 transition-all text-primary font-medium" data-path="log" href="#"><span class="material-symbols-outlined text-[24px]">edit_note</span><span class="text-label-sm">Log</span></a><a class="flex flex-col items-center justify-center w-14 h-14 rounded-full bg-primary text-on-primary shadow-[0_4px_20px_rgba(5,150,105,0.2)] hover:bg-primary-container transition-all -mt-4" data-path="scan" href="#"><span class="material-symbols-outlined text-[28px]">qr_code_scanner</span></a><a class="flex flex-col items-center justify-center gap-space-xs w-14 h-14 text-on-surface-variant hover:text-primary transition-all" data-path="progress" href="#"><span class="material-symbols-outlined text-[24px]">monitoring</span><span class="text-label-sm">Progress</span></a><a class="flex flex-col items-center justify-center gap-space-xs w-14 h-14 text-on-surface-variant hover:text-primary transition-all" data-path="profile" href="#"><span class="material-symbols-outlined text-[24px]">person</span><span class="text-label-sm">Profile</span></a></div></nav></body></html>

@@ -1,0 +1,16 @@
+{
+  "short_name": "NutriTrack",
+  "name": "NutriTrack AI - Nutrition & Food Tracker",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23059669'><path d='M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z'/></svg>",
+      "type": "image/svg+xml",
+      "sizes": "192x192 512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#f7f9fb",
+  "theme_color": "#006948",
+  "display": "standalone",
+  "orientation": "portrait"
+}
