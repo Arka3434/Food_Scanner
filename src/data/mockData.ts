@@ -1,4 +1,4 @@
-import { LoggedMeal, NutritionTargets, UserProfile, ScanResult, DayProgressData, WeightEntry, AppearanceSettings } from '../types';
+import { LoggedMeal, NutritionTargets, UserProfile, ScanResult, DayProgressData, WeightEntry, AppearanceSettings, FoodItem } from '../types';
 
 export const INITIAL_USER_PROFILE: UserProfile = {
   name: "Alex Mercer",
@@ -192,3 +192,111 @@ export const MOCK_ANALYTICS_STATS = {
   fatStatus: "Optimal range",
   dailyAvgPercent: "98%"
 };
+
+export const MOCK_FOOD_ITEMS: FoodItem[] = [
+  {
+    id: "food-greek-yogurt",
+    name: "Greek Yogurt & Berries",
+    portion: "1 bowl (200g)",
+    servingUnit: "bowl",
+    servingSize: 1,
+    calories: 220,
+    protein: 18,
+    carbs: 24,
+    fat: 4,
+    fiber: 3,
+    category: "Breakfast",
+    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCk8WKfP1Efb-Grfwegxc1xyIri6QFgJov3lnqLYbn9iXam9vT8Um4phk_3XMmdGIORAoehXrcaJK_vWYA-yPBCqNvkoFdQpyFP9nm3LpF2ZW7vprv3q9gfyZGC1YL3QjQPhkNBYO1PibwRNjK41-xOgM_Q6kTObr9zI9Ibxu3IlMEtIoKW6YTOuesiB54dv4C-iGA0NtiPCN8ZqhjmvMeAd1McgHAGxj_dOte0si5Vik6lRS4Idu4",
+    isFavorite: true
+  },
+  {
+    id: "food-espresso",
+    name: "Espresso",
+    portion: "1 shot (30ml)",
+    servingUnit: "shot",
+    servingSize: 1,
+    calories: 5,
+    protein: 0,
+    carbs: 1,
+    fat: 0,
+    category: "Drinks",
+    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuC9EnK46kSnWWj9WM6sWshFu7am3PILXsQ9Lw7xxXeKd5sReHdGf_SgxLeHnsF6BoFIUF0pm7wCXmZwD_7LVKoGLwh1eAc44wMDc3Ab3dzf0E-CA73_xYHy0Vr7a6d82f9M3rkI8XXXRVECxmW_QNvsNZZLpOCJShyMMBDZELHKu8wC6uX_F82pD-7PHUOTy60jASD1b9UdmG5_t_yysXt8RzmVdc3akmzZ87lFxuzVIvhYPP1fYR4",
+    isFavorite: true
+  },
+  {
+    id: "food-salmon-poke",
+    name: "Salmon Poke Bowl",
+    portion: "1 regular bowl",
+    servingUnit: "bowl",
+    servingSize: 1,
+    calories: 450,
+    protein: 28,
+    carbs: 48,
+    fat: 14,
+    fiber: 6,
+    category: "Lunch",
+    image: "/images/salmon-poke-bowl.jpg",
+    isFavorite: true
+  },
+  {
+    id: "food-chicken-bowl",
+    name: "Grilled Chicken Bowl",
+    portion: "1 plate (350g)",
+    servingUnit: "plate",
+    servingSize: 1,
+    calories: 550,
+    protein: 48,
+    carbs: 46,
+    fat: 9,
+    fiber: 6,
+    category: "Dinner",
+    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDFS5WPydXzAZ1KeA6_3Gl1TKbxe8UWdmB32lMKPUhHFTX4o4gvavtoiuq5vWdcZjpwBDrWXcljNA8RywqqxTmaWXlti9ORguXZebhZ5JGDkiuBDUb2vzSDgmB5x_BUpt8LZCHdSym8OQ-W7JGRTzXk0WXevZW32NldDcdXbhJmIrOtgyd3S2JqL6ODfl6s_kocDgQ6QgyPhWr8ysXrQxchVCBDz0AsnS5p6QcjOAyOujotThclJ4w",
+    isFavorite: false
+  },
+  {
+    id: "food-avocado-edamame",
+    name: "Avocado & Edamame",
+    portion: "1 plate (150g)",
+    servingUnit: "plate",
+    servingSize: 1,
+    calories: 220,
+    protein: 6,
+    carbs: 12,
+    fat: 18,
+    fiber: 7,
+    category: "Snacks",
+    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAvVxysI1hkcDDyii0iJHS-mLSQ7uRiVNCuD0x6Q6r1AVdodM6s754WfLjsLWhneRa2RlV1D2T_WvRVkZiOwQSNmhOYAqOGCey8MSgmExuPrjoDSFCbR1xza-p2-FnWlhge_ubywfZ4FKQBFcsFqwk2plGZ3m8KhNG54pbD73h-WrTMQQWzm-L2NqXkQpkw_ozSJsEd0SnDaEIMV9F7Kb4znNdY-Zy6RcUjWh0sATG-dxjy1EF995o",
+    isFavorite: false
+  },
+  {
+    id: "food-sushi-rice",
+    name: "Sushi Rice",
+    portion: "1 bowl (120g)",
+    servingUnit: "bowl",
+    servingSize: 1,
+    calories: 160,
+    protein: 3,
+    carbs: 35,
+    fat: 0.5,
+    fiber: 1,
+    category: "Lunch",
+    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCH6j3x1m0W2PBiV3Y7hZqG3uuc1PS7-BlCGWxtCr1wMm0pOCaJzVvP-kk6IpAcmrHQUngteNsKUJovVdSOFPhmqC8K9o0SGBtdncYVEtBjODfdbuhLGP-jOcvh3GcsPJnET3Qh2UjqCbeTJfIqEpz5eLZtWMZ_kCFH90TucGYTIyiEneCJitI7thJetblG0YWB-VpZMpKqUvX97XJG-V7fZOO5oXjfNUA5iPmh1zEa7HUo2F2TU8E",
+    isFavorite: false
+  },
+  {
+    id: "food-chicken-breast",
+    name: "Chicken Breast",
+    portion: "150g",
+    servingUnit: "serving",
+    servingSize: 1,
+    calories: 210,
+    protein: 46,
+    carbs: 0,
+    fat: 3.5,
+    fiber: 0,
+    category: "Protein",
+    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBWTl-68PS--MEk99CeTYc8RW1lPixf0Kj8g3HYVFgQ_LBDtTj0vHRZyy3cNNkwfPoODeCNI2GyiLM6Jh2WttxScZwE8UllYh7pd1ei0oWLzmP-f0ZwYaOp4RWiUc-zlwhgRh2BIudYqQlJOUV_dC9DnsmVMSW5Ioi1dHMuxFQE7pBx4drC4iZr_zSWqWrKSyZ9qWJIowJJ7uys0K1XKM3yjT2fVTS5R9GRD_nMZxxcHOrhaF71LOM",
+    isFavorite: false
+  }
+];
+

@@ -11,6 +11,9 @@ import { FoodLogPage } from './pages/FoodLogPage';
 import { ScannerPage } from './pages/ScannerPage';
 import { MealDetailPage } from './pages/MealDetailPage';
 import { ProfilePage } from './pages/ProfilePage';
+import { FoodItemsPage } from './pages/FoodItemsPage';
+import { FoodDetailPage } from './pages/FoodDetailPage';
+import { AddManuallyPage } from './pages/AddManuallyPage';
 
 // Root Entry Guard: Redirects to /dashboard if onboarded, else /splash
 const RootRedirect: React.FC = () => {
@@ -36,6 +39,11 @@ export const AppContent: React.FC = () => {
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/log" element={<FoodLogPage />} />
             <Route path="/scan" element={<ScannerPage />} />
+            <Route path="/foods" element={<FoodItemsPage />} />
+            <Route path="/food-items" element={<Navigate to="/foods" replace />} />
+            <Route path="/food-detail/:foodId" element={<FoodDetailPage />} />
+            <Route path="/food/:foodId" element={<FoodDetailPage />} />
+            <Route path="/add-manually" element={<AddManuallyPage />} />
             <Route path="/meal/:mealId" element={<MealDetailPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             {/* Catch-all redirect */}

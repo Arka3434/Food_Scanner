@@ -8,13 +8,16 @@ export const AppHeader: React.FC = () => {
   const { userProfile } = useNutrition();
   const path = location.pathname;
 
-  // Header is omitted on onboarding, scanner, meal detail, and food log (food log has its own header)
+  // Header is omitted on onboarding, scanner, meal detail, food log, and food management screens (which render their own specialized headers)
   if (
     path === '/splash' ||
     path.startsWith('/setup') ||
     path === '/scan' ||
     path.startsWith('/meal') ||
-    path === '/log'
+    path === '/log' ||
+    path === '/foods' ||
+    path.startsWith('/food-detail') ||
+    path === '/add-manually'
   ) {
     return null;
   }

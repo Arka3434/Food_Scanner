@@ -55,6 +55,8 @@ export interface FoodItem {
   id: string;
   name: string;
   portion: string;
+  servingUnit?: string;
+  servingSize?: number;
   calories: number;
   protein: number;
   carbs: number;

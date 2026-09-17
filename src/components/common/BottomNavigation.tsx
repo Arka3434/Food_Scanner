@@ -27,22 +27,19 @@ export const BottomNavigation: React.FC = () => {
   }
 
   const isDashboard = path === '/dashboard' || path === '/';
-  const isAnalytics = path === '/log' && hash === '#analytics';
-  const isFoodLog = path === '/log' && hash !== '#analytics';
+  const isAnalytics = path === '/log';
+  const isMeals = path === '/foods' || path.startsWith('/food-detail') || path === '/add-manually';
   const isProfile = path === '/profile';
 
-  const handleNavigateToLog = (targetHash: '#food-log' | '#analytics') => {
+  const handleNavigateToAnalytics = () => {
     if (path === '/log') {
-      window.location.hash = targetHash;
-      const targetId = targetHash === '#analytics' ? 'analytics' : 'food-log';
-      const el = document.getElementById(targetId);
+      window.location.hash = '#analytics';
+      const el = document.getElementById('analytics');
       if (el) {
         el.scrollIntoView({ behavior: 'smooth' });
-      } else if (targetHash === '#food-log') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     } else {
-      navigate(`/log${targetHash}`);
+      navigate('/log#analytics');
     }
   };
 
@@ -70,7 +67,7 @@ export const BottomNavigation: React.FC = () => {
           <button
             type="button"
             aria-label="Analytics"
-            onClick={() => handleNavigateToLog('#analytics')}
+            onClick={handleNavigateToAnalytics}
             className={`flex flex-col items-center justify-center w-12 h-12 rounded-full transition-all duration-150 relative ${
               isAnalytics ? 'text-[#4F8CFF]' : 'text-[#71717a] hover:text-white'
             }`}
@@ -95,17 +92,17 @@ export const BottomNavigation: React.FC = () => {
             </button>
           </div>
 
-          {/* 4. MEALS / FOOD LOG -> /log#food-log */}
+          {/* 4. MEALS / FOOD ITEMS -> /foods */}
           <button
             type="button"
             aria-label="Meals"
-            onClick={() => handleNavigateToLog('#food-log')}
+            onClick={() => navigate('/foods')}
             className={`flex flex-col items-center justify-center w-12 h-12 rounded-full transition-all duration-150 relative ${
-              isFoodLog ? 'text-[#4F8CFF]' : 'text-[#71717a] hover:text-white'
+              isMeals ? 'text-[#4F8CFF]' : 'text-[#71717a] hover:text-white'
             }`}
           >
             <MealsNavIcon className="size-6 transition-transform duration-150 active:scale-95" />
-            {isFoodLog && (
+            {isMeals && (
               <span className="absolute bottom-1 w-1 h-1 rounded-full bg-[#4F8CFF] shadow-[0_0_8px_#4F8CFF]"></span>
             )}
             <span className="sr-only">Meals</span>
