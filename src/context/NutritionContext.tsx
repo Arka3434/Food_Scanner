@@ -1,14 +1,35 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { FoodItem, LoggedMeal, NutritionTargets, UserProfile, MealCategory } from '../types';
-import { INITIAL_USER_PROFILE, INITIAL_TARGETS, INITIAL_MEALS, MOCK_FOOD_DATABASE } from '../data/mockData';
+import {
+  LoggedMeal,
+  NutritionTargets,
+  UserProfile,
+  MacroType,
+  MealCategory,
+  FoodIngredientItem,
+  WeightEntry,
+  AppearanceSettings
+} from '../types';
+import {
+  INITIAL_USER_PROFILE,
+  INITIAL_TARGETS,
+  INITIAL_MEALS,
+  INITIAL_WEIGHT_HISTORY,
+  INITIAL_APPEARANCE
+} from '../data/mockData';
 
 interface NutritionContextType {
   userProfile: UserProfile;
   targets: NutritionTargets;
   meals: LoggedMeal[];
-  foods: FoodItem[];
-  waterIntake: number;
+  waterIntake: number; // in Litres
   streak: number;
+  selectedMacro: MacroType;
+  setSelectedMacro: (macro: MacroType) => void;
+  weightHistory: WeightEntry[];
+  appearance: AppearanceSettings;
+  updateAppearance: (settings: Partial<AppearanceSettings>) => void;
+  addWeightEntry: (weight: number, date?: string, note?: string) => void;
+  deleteWeightEntry: (id: string) => void;
   consumed: {
     calories: number;
     protein: number;
@@ -18,29 +39,41 @@ interface NutritionContextType {
   };
   remainingCalories: number;
   caloriePercent: number;
-  addMeal: (meal: { name: string; category: MealCategory; calories: number; protein: number; carbs: number; fat: number; fiber?: number; items?: any[] }) => void;
+  completeOnboarding: (data: Partial<UserProfile>) => void;
+  addMeal: (mealData: {
+    name: string;
+    category: MealCategory;
+    calories: number;
+    protein: number;
+    carbs: number;
+    fat: number;
+    fiber?: number;
+    image?: string;
+    items?: FoodIngredientItem[];
+  }) => void;
   deleteMeal: (id: string) => void;
+  updateMealItem: (mealId: string, itemIndex: number, updatedItem: Partial<FoodIngredientItem>) => void;
+  deleteMealItem: (mealId: string, itemIndex: number) => void;
+  addMealItem: (mealId: string, item: FoodIngredientItem) => void;
   addWater: (amount?: number) => void;
   updateTargets: (newTargets: Partial<NutritionTargets>) => void;
   updateProfile: (newProfile: Partial<UserProfile>) => void;
-  toggleFavorite: (foodId: string) => void;
   resetToDefaults: () => void;
 }
 
-const STORAGE_VERSION = 'v1';
+const STORAGE_VERSION = 'v2';
 const KEY_PREFIX = `nutritrack_${STORAGE_VERSION}_`;
 
-// Safe loaders with validation and fallback to guarantee valid state
 const safeLoadProfile = (): UserProfile => {
   try {
-    const raw = localStorage.getItem(`${KEY_PREFIX}profile`) || localStorage.getItem('nutritrack_profile');
+    const raw = localStorage.getItem(`${KEY_PREFIX}profile`);
     if (!raw) return INITIAL_USER_PROFILE;
     const parsed = JSON.parse(raw);
-    if (parsed && typeof parsed === 'object' && typeof parsed.name === 'string' && parsed.name.trim().length > 0) {
+    if (parsed && typeof parsed === 'object') {
       return {
         ...INITIAL_USER_PROFILE,
         ...parsed,
-        name: parsed.name.trim()
+        name: typeof parsed.name === 'string' && parsed.name.trim() ? parsed.name.trim() : INITIAL_USER_PROFILE.name
       };
     }
     return INITIAL_USER_PROFILE;
@@ -51,7 +84,7 @@ const safeLoadProfile = (): UserProfile => {
 
 const safeLoadTargets = (): NutritionTargets => {
   try {
-    const raw = localStorage.getItem(`${KEY_PREFIX}targets`) || localStorage.getItem('nutritrack_targets');
+    const raw = localStorage.getItem(`${KEY_PREFIX}targets`);
     if (!raw) return INITIAL_TARGETS;
     const parsed = JSON.parse(raw);
     if (parsed && typeof parsed === 'object' && typeof parsed.calories === 'number' && parsed.calories > 0) {
@@ -63,41 +96,87 @@ const safeLoadTargets = (): NutritionTargets => {
   }
 };
 
-const safeLoadMeals = (): LoggedMeal[] => {
-  try {
-    const raw = localStorage.getItem(`${KEY_PREFIX}meals`) || localStorage.getItem('nutritrack_meals');
-    if (!raw) return INITIAL_MEALS;
-    const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed) && parsed.length > 0) {
-      return parsed;
-    }
-    return INITIAL_MEALS;
-  } catch {
-    return INITIAL_MEALS;
-  }
+const recalculateMeal = (meal: LoggedMeal): LoggedMeal => {
+  if (!meal.items || meal.items.length === 0) return meal;
+  const totals = meal.items.reduce(
+    (acc, it) => ({
+      calories: acc.calories + (it.calories || 0),
+      protein: acc.protein + (it.protein || 0),
+      carbs: acc.carbs + (it.carbs || 0),
+      fat: acc.fat + (it.fat || 0)
+    }),
+    { calories: 0, protein: 0, carbs: 0, fat: 0 }
+  );
+  return {
+    ...meal,
+    calories: Math.round(totals.calories),
+    protein: Math.round(totals.protein),
+    carbs: Math.round(totals.carbs),
+    fat: parseFloat(totals.fat.toFixed(1))
+  };
 };
 
-const safeLoadFoods = (): FoodItem[] => {
+const safeLoadMeals = (): LoggedMeal[] => {
   try {
-    const raw = localStorage.getItem(`${KEY_PREFIX}foods`) || localStorage.getItem('nutritrack_foods');
-    if (!raw) return MOCK_FOOD_DATABASE;
+    const raw = localStorage.getItem(`${KEY_PREFIX}meals`);
+    if (!raw) return INITIAL_MEALS.map(recalculateMeal);
     const parsed = JSON.parse(raw);
     if (Array.isArray(parsed) && parsed.length > 0) {
-      return parsed;
+      return parsed.map(recalculateMeal);
     }
-    return MOCK_FOOD_DATABASE;
+    return INITIAL_MEALS.map(recalculateMeal);
   } catch {
-    return MOCK_FOOD_DATABASE;
+    return INITIAL_MEALS.map(recalculateMeal);
   }
 };
 
 const safeLoadWater = (): number => {
   try {
-    const raw = localStorage.getItem(`${KEY_PREFIX}water`) || localStorage.getItem('nutritrack_water');
+    const raw = localStorage.getItem(`${KEY_PREFIX}water`);
     const num = Number(raw);
-    return isNaN(num) || num < 0 ? 1800 : num;
+    return isNaN(num) || num < 0 ? 2.8 : Math.min(10, num);
   } catch {
-    return 1800;
+    return 2.8;
+  }
+};
+
+const safeLoadSelectedMacro = (): MacroType => {
+  try {
+    const raw = localStorage.getItem(`${KEY_PREFIX}selected_macro`) as MacroType;
+    if (raw && ['CALORIES', 'PROTEIN', 'CARBS', 'FAT'].includes(raw)) {
+      return raw;
+    }
+    return 'PROTEIN';
+  } catch {
+    return 'PROTEIN';
+  }
+};
+
+const safeLoadWeightHistory = (): WeightEntry[] => {
+  try {
+    const raw = localStorage.getItem(`${KEY_PREFIX}weight_history`);
+    if (!raw) return INITIAL_WEIGHT_HISTORY;
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed) && parsed.length > 0) {
+      return parsed;
+    }
+    return INITIAL_WEIGHT_HISTORY;
+  } catch {
+    return INITIAL_WEIGHT_HISTORY;
+  }
+};
+
+const safeLoadAppearance = (): AppearanceSettings => {
+  try {
+    const raw = localStorage.getItem(`${KEY_PREFIX}appearance`);
+    if (!raw) return INITIAL_APPEARANCE;
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === 'object') {
+      return { ...INITIAL_APPEARANCE, ...parsed };
+    }
+    return INITIAL_APPEARANCE;
+  } catch {
+    return INITIAL_APPEARANCE;
   }
 };
 
@@ -107,11 +186,35 @@ export const NutritionProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [userProfile, setUserProfile] = useState<UserProfile>(safeLoadProfile);
   const [targets, setTargets] = useState<NutritionTargets>(safeLoadTargets);
   const [meals, setMeals] = useState<LoggedMeal[]>(safeLoadMeals);
-  const [foods, setFoods] = useState<FoodItem[]>(safeLoadFoods);
   const [waterIntake, setWaterIntake] = useState<number>(safeLoadWater);
+  const [selectedMacro, setSelectedMacro] = useState<MacroType>(safeLoadSelectedMacro);
+  const [weightHistory, setWeightHistory] = useState<WeightEntry[]>(safeLoadWeightHistory);
+  const [appearance, setAppearance] = useState<AppearanceSettings>(safeLoadAppearance);
   const [streak] = useState<number>(12);
 
-  // Local storage persistence under versioned keys
+  // Apply appearance theme & CSS vars
+  useEffect(() => {
+    const root = document.documentElement;
+    if (appearance.theme === 'dark') {
+      root.classList.add('dark');
+      root.classList.remove('light');
+    } else if (appearance.theme === 'light') {
+      root.classList.remove('dark');
+      root.classList.add('light');
+    } else {
+      // auto
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (prefersDark) {
+        root.classList.add('dark');
+      } else {
+        root.classList.remove('dark');
+      }
+    }
+    root.style.setProperty('--accent-color', appearance.accent);
+    localStorage.setItem(`${KEY_PREFIX}appearance`, JSON.stringify(appearance));
+  }, [appearance]);
+
+  // Sync state to versioned localStorage
   useEffect(() => {
     localStorage.setItem(`${KEY_PREFIX}profile`, JSON.stringify(userProfile));
   }, [userProfile]);
@@ -125,14 +228,18 @@ export const NutritionProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   }, [meals]);
 
   useEffect(() => {
-    localStorage.setItem(`${KEY_PREFIX}foods`, JSON.stringify(foods));
-  }, [foods]);
-
-  useEffect(() => {
     localStorage.setItem(`${KEY_PREFIX}water`, waterIntake.toString());
   }, [waterIntake]);
 
-  // Derived totals
+  useEffect(() => {
+    localStorage.setItem(`${KEY_PREFIX}selected_macro`, selectedMacro);
+  }, [selectedMacro]);
+
+  useEffect(() => {
+    localStorage.setItem(`${KEY_PREFIX}weight_history`, JSON.stringify(weightHistory));
+  }, [weightHistory]);
+
+  // Consumed is strictly the dynamic sum of all meals
   const consumed = meals.reduce(
     (acc, meal) => ({
       calories: acc.calories + (meal.calories || 0),
@@ -147,29 +254,81 @@ export const NutritionProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const remainingCalories = Math.max(0, targets.calories - consumed.calories);
   const caloriePercent = Math.min(100, Math.round((consumed.calories / targets.calories) * 100));
 
-  const addMeal = (mealData: { name: string; category: MealCategory; calories: number; protein: number; carbs: number; fat: number; fiber?: number; items?: any[] }) => {
-    const newMeal: LoggedMeal = {
+  const completeOnboarding = (data: Partial<UserProfile>) => {
+    setUserProfile(prev => ({
+      ...prev,
+      ...data,
+      isOnboarded: true
+    }));
+  };
+
+  const addMeal = (mealData: {
+    name: string;
+    category: MealCategory;
+    calories: number;
+    protein: number;
+    carbs: number;
+    fat: number;
+    fiber?: number;
+    image?: string;
+    items?: FoodIngredientItem[];
+  }) => {
+    const rawMeal: LoggedMeal = {
       id: `meal-${Date.now()}`,
       name: mealData.name,
       category: mealData.category,
       calories: Math.round(mealData.calories),
       protein: Math.round(mealData.protein),
       carbs: Math.round(mealData.carbs),
-      fat: Math.round(mealData.fat),
+      fat: parseFloat(mealData.fat.toFixed(1)),
       fiber: mealData.fiber || 0,
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      image: mealData.image,
       items: mealData.items
     };
 
-    setMeals(prev => [newMeal, ...prev]);
+    const calculatedMeal = recalculateMeal(rawMeal);
+    setMeals(prev => [calculatedMeal, ...prev]);
   };
 
   const deleteMeal = (id: string) => {
     setMeals(prev => prev.filter(m => m.id !== id));
   };
 
-  const addWater = (amount = 250) => {
-    setWaterIntake(prev => Math.min(5000, prev + amount));
+  // Modify individual meal items (used by MealDetail and FoodLog editing)
+  const updateMealItem = (mealId: string, itemIndex: number, updatedItem: Partial<FoodIngredientItem>) => {
+    setMeals(prev =>
+      prev.map(meal => {
+        if (meal.id !== mealId || !meal.items) return meal;
+        const newItems = [...meal.items];
+        newItems[itemIndex] = { ...newItems[itemIndex], ...updatedItem };
+        return recalculateMeal({ ...meal, items: newItems });
+      })
+    );
+  };
+
+  const deleteMealItem = (mealId: string, itemIndex: number) => {
+    setMeals(prev =>
+      prev.map(meal => {
+        if (meal.id !== mealId || !meal.items) return meal;
+        const newItems = meal.items.filter((_, idx) => idx !== itemIndex);
+        return recalculateMeal({ ...meal, items: newItems });
+      })
+    );
+  };
+
+  const addMealItem = (mealId: string, item: FoodIngredientItem) => {
+    setMeals(prev =>
+      prev.map(meal => {
+        if (meal.id !== mealId) return meal;
+        const newItems = [...(meal.items || []), item];
+        return recalculateMeal({ ...meal, items: newItems });
+      })
+    );
+  };
+
+  const addWater = (amount = 0.25) => {
+    setWaterIntake(prev => parseFloat((Math.min(10, Math.max(0, prev + amount))).toFixed(2)));
   };
 
   const updateTargets = (newTargets: Partial<NutritionTargets>) => {
@@ -177,21 +336,51 @@ export const NutritionProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   const updateProfile = (newProfile: Partial<UserProfile>) => {
-    setUserProfile(prev => ({ ...prev, ...newProfile }));
+    setUserProfile(prev => {
+      const updated = { ...prev, ...newProfile };
+      // If unit changed, update heightUnit and weightUnit to match
+      if (newProfile.unit && newProfile.unit !== prev.unit) {
+        if (newProfile.unit === 'imperial') {
+          updated.heightUnit = 'ft';
+          updated.weightUnit = 'lb';
+        } else {
+          updated.heightUnit = 'cm';
+          updated.weightUnit = 'kg';
+        }
+      }
+      return updated;
+    });
   };
 
-  const toggleFavorite = (foodId: string) => {
-    setFoods(prev =>
-      prev.map(f => (f.id === foodId ? { ...f, isFavorite: !f.isFavorite } : f))
-    );
+  const addWeightEntry = (weight: number, date?: string, note?: string) => {
+    const newEntry: WeightEntry = {
+      id: `w-${Date.now()}`,
+      date: date || new Date().toISOString().split('T')[0],
+      weight: parseFloat(weight.toFixed(1)),
+      note
+    };
+
+    setWeightHistory(prev => [newEntry, ...prev]);
+    // Also update current profile weight
+    setUserProfile(prev => ({ ...prev, weight: parseFloat(weight.toFixed(1)) }));
+  };
+
+  const deleteWeightEntry = (id: string) => {
+    setWeightHistory(prev => prev.filter(w => w.id !== id));
+  };
+
+  const updateAppearance = (settings: Partial<AppearanceSettings>) => {
+    setAppearance(prev => ({ ...prev, ...settings }));
   };
 
   const resetToDefaults = () => {
     setUserProfile(INITIAL_USER_PROFILE);
     setTargets(INITIAL_TARGETS);
-    setMeals(INITIAL_MEALS);
-    setFoods(MOCK_FOOD_DATABASE);
-    setWaterIntake(1800);
+    setMeals(INITIAL_MEALS.map(recalculateMeal));
+    setWaterIntake(2.8);
+    setSelectedMacro('PROTEIN');
+    setWeightHistory(INITIAL_WEIGHT_HISTORY);
+    setAppearance(INITIAL_APPEARANCE);
   };
 
   return (
@@ -200,18 +389,27 @@ export const NutritionProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         userProfile,
         targets,
         meals,
-        foods,
         waterIntake,
         streak,
+        selectedMacro,
+        setSelectedMacro,
+        weightHistory,
+        appearance,
+        updateAppearance,
+        addWeightEntry,
+        deleteWeightEntry,
         consumed,
         remainingCalories,
         caloriePercent,
+        completeOnboarding,
         addMeal,
         deleteMeal,
+        updateMealItem,
+        deleteMealItem,
+        addMealItem,
         addWater,
         updateTargets,
         updateProfile,
-        toggleFavorite,
         resetToDefaults
       }}
     >

@@ -1,188 +1,262 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useNutrition } from '../context/NutritionContext';
-import { FoodCard } from '../components/common/FoodCard';
-import { FilterPill } from '../components/common/FilterPill';
-import { FoodItem, MealCategory } from '../types';
+import { WeekDayStrip } from '../components/food-log/WeekDayStrip';
+import { AnalyticsGrid } from '../components/food-log/AnalyticsGrid';
+import { DailyIntakeChart } from '../components/food-log/DailyIntakeChart';
 
 export const FoodLogPage: React.FC = () => {
-  const { foods, addMeal, toggleFavorite } = useNutrition();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { meals, targets, consumed } = useNutrition();
+  const [selectedDate, setSelectedDate] = useState('2026-09-16');
 
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [activeTab, setActiveTab] = useState<'explore' | 'favorites'>('explore');
-  const [showBarcodeModal, setShowBarcodeModal] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
+  // Handle automatic scrolling for #food-log or #analytics
+  useEffect(() => {
+    const hash = location.hash;
+    if (hash === '#analytics') {
+      const el = document.getElementById('analytics');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else if (hash === '#food-log') {
+      const el = document.getElementById('food-log');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+  }, [location.hash]);
 
-  const categories = [
-    { id: 'all', label: 'All Foods' },
-    { id: 'indian', label: 'Indian' },
-    { id: 'breakfast', label: 'Breakfast' },
-    { id: 'lunch', label: 'Lunch' },
-    { id: 'dinner', label: 'Dinner' },
-    { id: 'snacks', label: 'Snacks' },
-    { id: 'protein', label: 'Protein' }
-  ];
-
-  const favoritesCount = foods.filter(f => f.isFavorite).length;
-
-  const filteredFoods = foods.filter(food => {
-    if (activeTab === 'favorites' && !food.isFavorite) return false;
-    const matchesSearch = food.name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCat = selectedCategory === 'all' || food.category.toLowerCase() === selectedCategory.toLowerCase();
-    return matchesSearch && matchesCat;
-  });
-
-  const handleAddToLog = (food: FoodItem, quantity: number, category: MealCategory) => {
-    addMeal({
-      name: food.name,
-      category,
-      calories: food.calories * quantity,
-      protein: food.protein * quantity,
-      carbs: food.carbs * quantity,
-      fat: food.fat * quantity,
-      fiber: (food.fiber || 0) * quantity
-    });
-
-    setToastMessage(`Added ${quantity}x ${food.name} to ${category}!`);
-    setTimeout(() => setToastMessage(''), 2500);
-  };
+  const breakfastMeal = meals.find((m) => m.category === 'breakfast');
+  const lunchMeal = meals.find((m) => m.category === 'lunch');
+  const dinnerMeal = meals.find((m) => m.category === 'dinner');
+  const snackMeal = meals.find((m) => m.category === 'snack');
 
   return (
-    <div className="flex flex-col gap-space-lg pb-12">
-      {/* Search Input & Barcode Scanner Trigger (Matching Stitch Screen 03) */}
-      <div className="flex flex-col gap-space-sm">
-        <div className="relative flex items-center">
-          <span className="material-symbols-outlined absolute left-4 text-outline text-[20px]">
-            search
-          </span>
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search food (e.g., Dal, Paneer, Oats)..."
-            className="w-full h-12 pl-12 pr-12 bg-surface-container-low rounded-xl text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/20 text-body-md transition-all shadow-sm border border-surface-container-high/40"
-          />
-          <button
-            type="button"
-            onClick={() => setShowBarcodeModal(true)}
-            className="absolute right-3 w-8 h-8 flex items-center justify-center rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface-variant transition-colors"
-            title="Scan barcode"
-          >
-            <span className="material-symbols-outlined text-[18px]">barcode_scanner</span>
-          </button>
-        </div>
-
-        {/* Category Filter Pills (Horizontal Scroll) */}
-        <div className="flex gap-space-sm overflow-x-auto pb-1 -mx-space-lg px-space-lg no-scrollbar">
-          {categories.map(cat => (
-            <FilterPill
-              key={cat.id}
-              label={cat.label}
-              isActive={selectedCategory === cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* Tab Selector: Explore vs Favorites (Matching Stitch Screen 03) */}
-      <div className="flex bg-surface-container-low p-1 rounded-xl border border-surface-container-high/40">
+    <div className="flex flex-col w-full min-h-screen bg-[#0E0F0D] text-[#fafafa] pb-28 select-none max-w-md mx-auto">
+      {/* Top Header */}
+      <header className="flex items-center justify-between px-4 py-4 border-b border-white/[0.06]">
         <button
           type="button"
-          onClick={() => setActiveTab('explore')}
-          className={`flex-1 py-2 text-label-md font-semibold rounded-lg transition-all ${
-            activeTab === 'explore'
-              ? 'bg-surface text-on-surface shadow-sm'
-              : 'text-on-surface-variant hover:text-on-surface'
-          }`}
+          aria-label="Go back"
+          onClick={() => navigate('/dashboard')}
+          className="flex size-10 items-center justify-center rounded-full hover:bg-white/10 transition-colors"
         >
-          Explore &amp; Log
+          <span className="material-symbols-outlined text-white">arrow_back</span>
         </button>
+        <h1 className="text-base font-semibold tracking-wide font-headline">
+          Food Log &amp; Analytics
+        </h1>
         <button
           type="button"
-          onClick={() => setActiveTab('favorites')}
-          className={`flex-1 py-2 text-label-md font-semibold rounded-lg transition-all ${
-            activeTab === 'favorites'
-              ? 'bg-surface text-on-surface shadow-sm'
-              : 'text-on-surface-variant hover:text-on-surface'
-          }`}
+          aria-label="Select Date"
+          onClick={() => alert('Calendar: Active week Sept 12 - Sept 18')}
+          className="flex size-10 items-center justify-center rounded-full hover:bg-white/10 transition-colors"
         >
-          My Favorites ({favoritesCount})
+          <span className="material-symbols-outlined text-white">calendar_today</span>
         </button>
-      </div>
+      </header>
 
-      {/* Feedback Toast */}
-      {toastMessage && (
-        <div className="bg-primary text-on-primary text-sm font-semibold px-4 py-2.5 rounded-xl shadow-md flex items-center gap-2 animate-bounce">
-          <span className="material-symbols-outlined text-[18px]">check_circle</span>
-          <span>{toastMessage}</span>
-        </div>
-      )}
+      <main className="flex-1 flex flex-col">
+        {/* Horizontal Week Strip */}
+        <WeekDayStrip
+          selectedDate={selectedDate}
+          onSelectDate={setSelectedDate}
+        />
 
-      {/* Main Food List Container */}
-      <div className="flex flex-col gap-space-md">
-        {filteredFoods.length > 0 ? (
-          filteredFoods.map(food => (
-            <FoodCard
-              key={food.id}
-              food={food}
-              onAddToLog={handleAddToLog}
-              onToggleFavorite={toggleFavorite}
-            />
-          ))
-        ) : (
-          <div className="bg-surface-container-lowest p-8 rounded-xl text-center flex flex-col items-center gap-2 border border-surface-container-high/40">
-            <span className="material-symbols-outlined text-[40px] text-outline">search_off</span>
-            <h4 className="text-headline-sm font-headline font-semibold text-on-surface">No foods found</h4>
-            <p className="text-body-sm text-outline">
-              Try a different keyword or switch categories.
-            </p>
+        {/* SECTION 1: FOOD LOG (Target for #food-log) */}
+        <section id="food-log" className="flex flex-col scroll-mt-4">
+          {/* Day Total Section */}
+          <div className="flex flex-col items-center justify-center py-8 px-4">
+            <div className="text-[48px] font-bold tracking-tight leading-none text-white font-headline">
+              {consumed.calories}
+            </div>
+            <div className="text-xs font-medium tracking-widest text-[#a1a1aa] uppercase mt-2 font-mono">
+              OF {targets.calories.toLocaleString()} KCAL
+            </div>
           </div>
-        )}
-      </div>
 
-      {/* Barcode Scanner Mock Modal */}
-      {showBarcodeModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-surface rounded-2xl max-w-sm w-full p-6 flex flex-col gap-4 shadow-xl border border-surface-container-high">
-            <div className="flex justify-between items-center">
-              <h3 className="text-headline-sm font-headline font-bold text-on-surface">
-                Barcode Scanner
-              </h3>
-              <button
-                type="button"
-                onClick={() => setShowBarcodeModal(false)}
-                className="text-outline hover:text-on-surface"
-              >
-                <span className="material-symbols-outlined text-[20px]">close</span>
-              </button>
+          {/* Entries List */}
+          <div className="flex flex-col px-4 gap-6 max-w-md mx-auto w-full">
+            {/* Breakfast Group */}
+            <div className="flex flex-col gap-3">
+              <div className="flex justify-between items-center text-[10px] uppercase font-bold tracking-widest text-[#a1a1aa] px-1 font-mono">
+                <span>Breakfast</span>
+                <span>{breakfastMeal ? `${breakfastMeal.calories} kcal` : '0 kcal'}</span>
+              </div>
+
+              {breakfastMeal && breakfastMeal.items && breakfastMeal.items.length > 0 ? (
+                breakfastMeal.items.map((it, idx) => (
+                  <div
+                    key={idx}
+                    onClick={() => navigate(`/meal/${breakfastMeal.id}`)}
+                    className="flex items-center justify-between py-2 px-1 hover:bg-white/[0.03] rounded-xl transition-colors cursor-pointer"
+                  >
+                    <div className="flex items-center gap-3">
+                      {it.image ? (
+                        <img
+                          src={it.image}
+                          alt={it.name}
+                          className="size-[36px] rounded-lg object-cover bg-[#18181b]"
+                        />
+                      ) : (
+                        <div className="size-[36px] rounded-lg bg-[#18181b] flex items-center justify-center text-[#4F8CFF]">
+                          <span className="material-symbols-outlined text-lg">restaurant</span>
+                        </div>
+                      )}
+                      <div className="flex flex-col">
+                        <span className="text-[15px] font-medium text-white">{it.name}</span>
+                        <span className="text-[11px] text-[#a1a1aa] font-mono">{it.portion}</span>
+                      </div>
+                    </div>
+                    <span className="text-sm font-medium text-[#a1a1aa] font-mono">{it.calories} kcal</span>
+                  </div>
+                ))
+              ) : breakfastMeal ? (
+                <div
+                  onClick={() => navigate(`/meal/${breakfastMeal.id}`)}
+                  className="flex items-center justify-between py-2 px-1 hover:bg-white/[0.03] rounded-xl transition-colors cursor-pointer"
+                >
+                  <div className="flex items-center gap-3">
+                    <img
+                      src={breakfastMeal.image || 'https://lh3.googleusercontent.com/aida-public/AB6AXuDbwtD3qVjM-ie5wT88Wh2Y3ANuOcYagMniCwsLEDoR3HY5nYc-4x-zCNhVyHEe1iAX2Gix34RVv7V682HabnhKff2-TW4G82jxbCjFN_pt4awwPiBqtokDKOr7lbwLlorxNrIxPBKx3QmVrD6gcOdJQ3fKL7XEA4B0-XdBuBjzoYZ1NVuVH4w0EP8KKd_6NwUAsRJQU2badxgQzgW6OWNuSbG7S06LFO6zb7dfBgueNXJQ3OspIik'}
+                      alt={breakfastMeal.name}
+                      className="size-[36px] rounded-lg object-cover"
+                    />
+                    <span className="text-[15px] font-medium text-white">{breakfastMeal.name}</span>
+                  </div>
+                  <span className="text-sm font-medium text-[#a1a1aa] font-mono">{breakfastMeal.calories} kcal</span>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => navigate('/scan')}
+                  className="w-full h-12 border border-dashed border-[#4F8CFF]/30 hover:border-[#4F8CFF] rounded-xl flex items-center justify-center transition-colors group"
+                >
+                  <span className="material-symbols-outlined text-[#4F8CFF] text-sm">
+                    add
+                  </span>
+                </button>
+              )}
             </div>
 
-            <div className="h-44 bg-surface-container-lowest rounded-xl border-2 border-dashed border-primary flex flex-col items-center justify-center gap-2 text-center p-4">
-              <span className="material-symbols-outlined text-[48px] text-primary animate-pulse">
-                barcode_scanner
-              </span>
-              <p className="text-sm font-medium text-on-surface-variant">
-                Point camera at nutrition barcode on packaging
-              </p>
-              <span className="text-xs text-outline">
-                (Simulated scanner ready)
-              </span>
+            {/* Lunch Group */}
+            <div className="flex flex-col gap-3">
+              <div className="flex justify-between items-center text-[10px] uppercase font-bold tracking-widest text-[#a1a1aa] px-1 font-mono">
+                <span>Lunch</span>
+                <span>{lunchMeal ? `${lunchMeal.calories} kcal` : '0 kcal'}</span>
+              </div>
+              {lunchMeal ? (
+                <div
+                  onClick={() => navigate(`/meal/${lunchMeal.id}`)}
+                  className="flex items-center justify-between py-2 px-1 hover:bg-white/[0.03] rounded-xl transition-colors cursor-pointer"
+                >
+                  <div className="flex items-center gap-3">
+                    <img
+                      src={lunchMeal.image || '/images/salmon-poke-bowl.jpg'}
+                      alt={lunchMeal.name}
+                      className="size-[36px] rounded-lg object-cover"
+                    />
+                    <div className="flex flex-col">
+                      <span className="text-[15px] font-medium text-white">{lunchMeal.name}</span>
+                      <span className="text-[11px] text-[#4F8CFF]">View breakdown &amp; edit</span>
+                    </div>
+                  </div>
+                  <span className="text-sm font-medium text-[#a1a1aa] font-mono">{lunchMeal.calories} kcal</span>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => navigate('/scan')}
+                  className="w-full h-12 border border-dashed border-[#4F8CFF]/30 hover:border-[#4F8CFF] rounded-xl flex items-center justify-center transition-colors group"
+                >
+                  <span className="material-symbols-outlined text-[#4F8CFF] text-sm">
+                    add
+                  </span>
+                </button>
+              )}
             </div>
 
-            <button
-              type="button"
-              onClick={() => {
-                setShowBarcodeModal(false);
-                setSearchQuery('Dal Makhani');
-              }}
-              className="w-full py-3 bg-primary text-on-primary rounded-xl font-headline font-bold text-sm hover:bg-primary-container transition-all"
-            >
-              Simulate Scan Product
-            </button>
+            {/* Dinner Group */}
+            <div className="flex flex-col gap-3">
+              <div className="flex justify-between items-center text-[10px] uppercase font-bold tracking-widest text-[#a1a1aa] px-1 font-mono">
+                <span>Dinner</span>
+                <span>{dinnerMeal ? `${dinnerMeal.calories} kcal` : '0 kcal'}</span>
+              </div>
+              {dinnerMeal ? (
+                <div
+                  onClick={() => navigate(`/meal/${dinnerMeal.id}`)}
+                  className="flex items-center justify-between py-2 px-1 hover:bg-white/[0.03] rounded-xl transition-colors cursor-pointer"
+                >
+                  <div className="flex items-center gap-3">
+                    <img
+                      src={dinnerMeal.image || 'https://lh3.googleusercontent.com/aida-public/AB6AXuDFS5WPydXzAZ1KeA6_3Gl1TKbxe8UWdmB32lMKPUhHFTX4o4gvavtoiuq5vWdcZjpwBDrWXcljNA8RywqqxTmaWXlti9ORguXZebhZ5JGDkiuBDUb2vzSDgmB5x_BUpt8LZCHdSym8OQ-W7JGRTzXk0WXevZW32NldDcdXbhJmIrOtgyd3S2JqL6ODfl6s_kocDgQ6QgyPhWr8ysXrQxchVCBDz0AsnS5p6QcjOAyOujotThclJ4w'}
+                      alt={dinnerMeal.name}
+                      className="size-[36px] rounded-lg object-cover"
+                    />
+                    <span className="text-[15px] font-medium text-white">{dinnerMeal.name}</span>
+                  </div>
+                  <span className="text-sm font-medium text-[#a1a1aa] font-mono">{dinnerMeal.calories} kcal</span>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => navigate('/scan')}
+                  className="w-full h-12 border border-dashed border-[#4F8CFF]/30 hover:border-[#4F8CFF] rounded-xl flex items-center justify-center transition-colors group"
+                >
+                  <span className="material-symbols-outlined text-[#4F8CFF] text-sm">
+                    add
+                  </span>
+                </button>
+              )}
+            </div>
+
+            {/* Snacks Group */}
+            <div className="flex flex-col gap-3">
+              <div className="flex justify-between items-center text-[10px] uppercase font-bold tracking-widest text-[#a1a1aa] px-1 font-mono">
+                <span>Snacks</span>
+                <span>{snackMeal ? `${snackMeal.calories} kcal` : '0 kcal'}</span>
+              </div>
+              {snackMeal ? (
+                <div
+                  onClick={() => navigate(`/meal/${snackMeal.id}`)}
+                  className="flex items-center justify-between py-2 px-1 hover:bg-white/[0.03] rounded-xl transition-colors cursor-pointer"
+                >
+                  <span className="text-[15px] font-medium text-white">{snackMeal.name}</span>
+                  <span className="text-sm font-medium text-[#a1a1aa] font-mono">{snackMeal.calories} kcal</span>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => navigate('/scan')}
+                  className="w-full h-12 border border-dashed border-[#4F8CFF]/30 hover:border-[#4F8CFF] rounded-xl flex items-center justify-center transition-colors group"
+                >
+                  <span className="material-symbols-outlined text-[#4F8CFF] text-sm">
+                    add
+                  </span>
+                </button>
+              )}
+            </div>
           </div>
+        </section>
+
+        {/* Section Divider */}
+        <div className="w-full max-w-md mx-auto px-4 my-8">
+          <div className="border-t border-white/[0.08]"></div>
         </div>
-      )}
+
+        {/* SECTION 2: DAILY INTAKE (Must come before Analytics) */}
+        <section className="flex flex-col w-full max-w-md mx-auto px-4 mb-6">
+          <DailyIntakeChart />
+        </section>
+
+        {/* SECTION 3: ANALYTICS (Target for #analytics) */}
+        <section id="analytics" className="flex flex-col w-full max-w-md mx-auto px-4 scroll-mt-6">
+          <AnalyticsGrid />
+        </section>
+      </main>
     </div>
   );
 };

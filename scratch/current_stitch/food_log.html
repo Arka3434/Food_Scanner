@@ -1,0 +1,379 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Food Log</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-dim": "#0c0c0f",
+              "inverse-primary": "#5b21b6",
+              "surface": "#0c0c0f",
+              "surface-variant": "#18181b",
+              "error-container": "#3b1111",
+              "secondary-container": "#27272a",
+              "surface-container-high": "#18181b",
+              "secondary": "#71717a",
+              "on-primary": "#0a0012",
+              "on-surface-variant": "#a1a1aa",
+              "primary": "#a78bfa",
+              "surface-container-highest": "#1e1e22",
+              "primary-fixed": "#ede9fe",
+              "tertiary": "#34d399",
+              "surface-container": "#121215",
+              "on-tertiary-fixed-variant": "#047857",
+              "on-tertiary": "#001a12",
+              "outline": "#52525b",
+              "on-primary-container": "#ede9fe",
+              "on-primary-fixed": "#2e1065",
+              "on-surface": "#fafafa",
+              "background": "#09090b",
+              "on-secondary-fixed-variant": "#3f3f46",
+              "inverse-on-surface": "#09090b",
+              "on-background": "#fafafa",
+              "on-secondary": "#09090b",
+              "tertiary-container": "#065f46",
+              "primary-fixed-dim": "#c4b5fd",
+              "on-tertiary-fixed": "#003318",
+              "on-secondary-container": "#a1a1aa",
+              "error": "#ef4444",
+              "on-error-container": "#fca5a5",
+              "tertiary-fixed-dim": "#6ee7b7",
+              "outline-variant": "#27272a",
+              "surface-bright": "#18181b",
+              "inverse-surface": "#fafafa",
+              "tertiary-fixed": "#bbf7d0",
+              "secondary-fixed": "#a1a1aa",
+              "on-error": "#1a0000",
+              "surface-container-low": "#0f0f12",
+              "surface-tint": "#a78bfa",
+              "on-secondary-fixed": "#18181b",
+              "on-tertiary-container": "#bbf7d0",
+              "secondary-fixed-dim": "#71717a",
+              "primary-container": "#7c3aed",
+              "on-primary-fixed-variant": "#5b21b6",
+              "surface-container-lowest": "#09090b"
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px"
+            },
+            fontFamily: {
+              headline: ["Geist"],
+              display: ["Geist"],
+              body: ["Geist"],
+              label: ["Geist"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+      body {
+        background-color: #0E0F0D;
+        color: #fafafa;
+        font-family: 'Geist', sans-serif;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-[#0E0F0D] text-on-background min-h-screen flex flex-col antialiased selection:bg-primary selection:text-on-primary">
+<!-- Header / Nav (Focused View Exception: Back-to-Main) -->
+<header class="flex items-center justify-between px-4 py-4 border-b border-outline-variant/30">
+<a aria-label="Go back" class="flex size-10 items-center justify-center rounded-full hover:bg-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined text-on-surface">arrow_back</span>
+</a>
+<h1 class="text-base font-semibold tracking-wide">Food Log</h1>
+<button aria-label="Select Date" class="flex size-10 items-center justify-center rounded-full hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-on-surface">calendar_today</span>
+</button>
+</header>
+<main class="flex-1 flex flex-col pb-12">
+<!-- Horizontal Week Strip -->
+<div class="flex items-center justify-between px-6 py-4 overflow-x-auto gap-2 border-b border-outline-variant/20">
+<div class="flex flex-col items-center gap-1.5 opacity-40">
+<span class="text-xs font-medium">M</span>
+<span class="text-xs font-semibold">12</span>
+</div>
+<div class="flex flex-col items-center gap-1.5 opacity-40">
+<span class="text-xs font-medium">T</span>
+<span class="text-xs font-semibold">13</span>
+</div>
+<div class="flex flex-col items-center gap-1.5 opacity-40">
+<span class="text-xs font-medium">W</span>
+<span class="text-xs font-semibold">14</span>
+</div>
+<div class="flex flex-col items-center gap-1.5 opacity-40">
+<span class="text-xs font-medium">T</span>
+<span class="text-xs font-semibold">15</span>
+</div>
+<div class="flex flex-col items-center gap-1.5 relative">
+<span class="text-xs font-medium text-tertiary">F</span>
+<span class="text-xs font-semibold text-on-surface">16</span>
+<span class="absolute -bottom-2 size-1.5 rounded-full bg-tertiary"></span>
+</div>
+<div class="flex flex-col items-center gap-1.5 opacity-40">
+<span class="text-xs font-medium">S</span>
+<span class="text-xs font-semibold">17</span>
+</div>
+<div class="flex flex-col items-center gap-1.5 opacity-40">
+<span class="text-xs font-medium">S</span>
+<span class="text-xs font-semibold">18</span>
+</div>
+</div>
+<!-- Day Total Section -->
+<div class="flex flex-col items-center justify-center py-8 px-4">
+<div class="text-[48px] font-bold tracking-tight leading-none text-on-surface">480</div>
+<div class="text-xs font-medium tracking-widest text-secondary uppercase mt-2">OF 2,100 KCAL</div>
+</div>
+<!-- Entries List -->
+<div class="flex flex-col px-4 gap-6 max-w-md mx-auto w-full">
+<!-- Breakfast Group -->
+<div class="flex flex-col gap-3">
+<div class="flex justify-between items-center text-[10px] uppercase font-bold tracking-widest text-secondary px-1">
+<span class="">Breakfast</span>
+<span class="">480 kcal</span>
+</div>
+<!-- Row 1 -->
+<div class="flex items-center justify-between py-2 px-1 hover:bg-surface-variant/20 rounded transition-colors">
+<div class="flex items-center gap-3">
+<img class="size-[36px] rounded object-cover" data-alt="Close up high resolution professional food photography of a vibrant healthy breakfast bowl filled with thick Greek yogurt, golden honey drizzle, and fresh mixed berries including blueberries and raspberries against a dark moody minimalist background with soft cinematic lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbwtD3qVjM-ie5wT88Wh2Y3ANuOcYagMniCwsLEDoR3HY5nYc-4x-zCNhVyHEe1iAX2Gix34RVv7V682HabnhKff2-TW4G82jxbCjFN_pt4awwPiBqtokDKOr7lbwLlorxNrIxPBKx3QmVrD6gcOdJQ3fKL7XEA4B0-XdBuBjzoYZ1NVuVH4w0EP8KKd_6NwUAsRJQU2badxgQzgW6OWNuSbG7S06LFO6zb7dfBgueNXJQ3OspIik">
+<span class="text-[15px] font-medium text-on-surface">Greek Yogurt &amp; Berries</span>
+</div>
+<span class="text-sm font-medium text-secondary">320 kcal</span>
+</div>
+<!-- Row 2 -->
+<div class="flex items-center justify-between py-2 px-1 hover:bg-surface-variant/20 rounded transition-colors">
+<div class="flex items-center gap-3">
+<img class="size-[36px] rounded object-cover" data-alt="Close up high resolution professional food photography of a steaming ceramic mug of artisanal black coffee with a delicate crema layer on top, set against a dark rustic wooden surface with atmospheric backlighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAULL2YAIDK7tZlkBkKZYASOS1zm18ZhyJ-Q2UPF3zJPVRGyQK7fdau8Wt0k-oh4xIMHXAt99khQzMY8x0huGzkWmwP2r9obl91a93pH7SewaEoTBGxrZ99RMpGb66PqTYI9sOF7uqiu5bkSZQQG094ZTCaGB1-DLA-OGZyJzA4_nE2nwQutFBbMkdo0-TsJgVMlpvbBjEgzVM6j2TM-KVp5XwjU6CC4B2vkTd1PZrOmYwhQWBM9CY">
+<span class="text-[15px] font-medium text-on-surface">Black Coffee</span>
+</div>
+<span class="text-sm font-medium text-secondary">160 kcal</span>
+</div>
+</div>
+<!-- Lunch Group -->
+<div class="flex flex-col gap-3">
+<div class="flex justify-between items-center text-[10px] uppercase font-bold tracking-widest text-secondary px-1">
+<span class="">Lunch</span>
+<span class="">0 kcal</span>
+</div>
+<!-- Empty meal group dashed row -->
+<button class="w-full h-12 border border-dashed border-outline-variant/60 rounded flex items-center justify-center hover:border-outline transition-colors group">
+<span class="material-symbols-outlined text-secondary group-hover:text-on-surface transition-colors text-sm">add</span>
+</button>
+</div>
+<!-- Dinner Group -->
+<div class="flex flex-col gap-3">
+<div class="flex justify-between items-center text-[10px] uppercase font-bold tracking-widest text-secondary px-1">
+<span class="">Dinner</span>
+<span class="">0 kcal</span>
+</div>
+<!-- Empty meal group dashed row -->
+<button class="w-full h-12 border border-dashed border-outline-variant/60 rounded flex items-center justify-center hover:border-outline transition-colors group">
+<span class="material-symbols-outlined text-secondary group-hover:text-on-surface transition-colors text-sm">add</span>
+</button>
+</div>
+<!-- Snacks Group -->
+<div class="flex flex-col gap-3">
+<div class="flex justify-between items-center text-[10px] uppercase font-bold tracking-widest text-secondary px-1">
+<span class="">Snacks</span>
+<span class="">0 kcal</span>
+</div>
+<!-- Empty meal group dashed row -->
+<button class="w-full h-12 border border-dashed border-outline-variant/60 rounded flex items-center justify-center hover:border-outline transition-colors group">
+<span class="material-symbols-outlined text-secondary group-hover:text-on-surface transition-colors text-sm">add</span>
+</button>
+</div>
+</div><!-- Section Divider -->
+<div class="w-full max-w-md mx-auto px-4 my-6">
+<div class="border-t border-outline-variant/30"></div>
+</div>
+<!-- Analytics Section -->
+<div class="flex flex-col w-full max-w-md mx-auto px-4 pb-24">
+<div class="bg-surface-container p-4 rounded-xl border border-outline-variant/20 mb-6">
+<div class="flex items-center justify-between mb-4">
+<span class="text-[10px] font-headline uppercase tracking-[0.1em] text-on-surface-variant/60 font-semibold">DAILY INTAKE</span>
+<span class="px-2.5 py-1 rounded-full text-[10px] font-headline font-semibold bg-tertiary-container text-on-tertiary-container">98% Avg</span>
+</div>
+<!-- Toggle Pills -->
+<div class="flex items-center gap-2 mb-6">
+<button class="px-3 py-1 rounded-full text-xs font-headline font-medium bg-tertiary text-on-tertiary">Calories</button>
+<button class="px-3 py-1 rounded-full text-xs font-headline font-medium bg-surface-container-high text-on-surface-variant/60 hover:text-on-surface transition-colors">Protein</button>
+</div>
+<!-- Chart Visual -->
+<div class="h-44 flex items-end justify-between gap-2 pt-6 pb-2 px-1">
+<!-- Mon -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<span class="text-[11px] font-headline font-bold text-on-surface">2.1k</span>
+<div class="w-full relative h-28 flex flex-col justify-end items-center">
+<div class="absolute inset-x-0 bottom-0 h-full rounded-t-xl rounded-b-lg pointer-events-none" style="background-color: rgba(255, 255, 255, 0.1);"></div>
+<div class="w-full bg-gradient-to-t from-blue-700 via-indigo-600 to-cyan-400 h-[76%] rounded-t-xl rounded-b-lg relative shadow-lg">
+<div class="absolute inset-y-0 left-0.5 w-1/3 bg-white/20 rounded-l-xl"></div>
+</div>
+</div>
+<span class="text-[10px] font-headline text-on-surface-variant">M</span>
+</div>
+<!-- Tue -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<span class="text-[11px] font-headline font-bold text-on-surface">2.3k</span>
+<div class="w-full relative h-28 flex flex-col justify-end items-center">
+<div class="absolute inset-x-0 bottom-0 h-full rounded-t-xl rounded-b-lg pointer-events-none" style="background-color: rgba(255, 255, 255, 0.1);"></div>
+<div class="w-full bg-gradient-to-t from-blue-700 via-indigo-600 to-cyan-400 h-[84%] rounded-t-xl rounded-b-lg relative shadow-lg">
+<div class="absolute inset-y-0 left-0.5 w-1/3 bg-white/20 rounded-l-xl"></div>
+</div>
+</div>
+<span class="text-[10px] font-headline text-on-surface-variant">T</span>
+</div>
+<!-- Wed -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<span class="text-[11px] font-headline font-bold text-on-surface">1.9k</span>
+<div class="w-full relative h-28 flex flex-col justify-end items-center">
+<div class="absolute inset-x-0 bottom-0 h-full rounded-t-xl rounded-b-lg pointer-events-none" style="background-color: rgba(255, 255, 255, 0.1);"></div>
+<div class="w-full bg-gradient-to-t from-blue-700 via-indigo-600 to-cyan-400 h-[68%] rounded-t-xl rounded-b-lg relative shadow-lg">
+<div class="absolute inset-y-0 left-0.5 w-1/3 bg-white/20 rounded-l-xl"></div>
+</div>
+</div>
+<span class="text-[10px] font-headline text-on-surface-variant">W</span>
+</div>
+<!-- Thu -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<span class="text-[11px] font-headline font-bold text-on-surface">2.4k</span>
+<div class="w-full relative h-28 flex flex-col justify-end items-center">
+<div class="absolute inset-x-0 bottom-0 h-full rounded-t-xl rounded-b-lg pointer-events-none" style="background-color: rgba(255, 255, 255, 0.1);"></div>
+<div class="w-full bg-gradient-to-t from-blue-700 via-indigo-600 to-cyan-400 h-[88%] rounded-t-xl rounded-b-lg relative shadow-lg">
+<div class="absolute inset-y-0 left-0.5 w-1/3 bg-white/20 rounded-l-xl"></div>
+</div>
+</div>
+<span class="text-[10px] font-headline text-on-surface-variant">T</span>
+</div>
+<!-- Fri (Active Highlighted) -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<span class="text-[11px] font-headline font-bold text-tertiary">2.5k</span>
+<div class="w-full relative h-28 flex flex-col justify-end items-center">
+<div class="absolute inset-x-0 bottom-0 h-full rounded-t-xl rounded-b-lg pointer-events-none" style="background-color: rgba(255, 255, 255, 0.1);"></div>
+<div class="w-full bg-gradient-to-t from-emerald-700 via-teal-600 to-tertiary h-[96%] rounded-t-xl rounded-b-lg relative shadow-lg">
+<div class="absolute inset-y-0 left-0.5 w-1/3 bg-white/20 rounded-l-xl"></div>
+<div class="absolute -top-1 inset-x-0 h-1.5 bg-tertiary/60 rounded-t-xl blur-[1px]"></div>
+</div>
+</div>
+<span class="text-[10px] font-headline font-bold text-tertiary">F</span>
+</div>
+<!-- Sat -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<span class="text-[11px] font-headline font-bold text-on-surface">2.2k</span>
+<div class="w-full relative h-28 flex flex-col justify-end items-center">
+<div class="absolute inset-x-0 bottom-0 h-full rounded-t-xl rounded-b-lg pointer-events-none" style="background-color: rgba(255, 255, 255, 0.1);"></div>
+<div class="w-full bg-gradient-to-t from-blue-700 via-indigo-600 to-cyan-400 h-[80%] rounded-t-xl rounded-b-lg relative shadow-lg">
+<div class="absolute inset-y-0 left-0.5 w-1/3 bg-white/20 rounded-l-xl"></div>
+</div>
+</div>
+<span class="text-[10px] font-headline text-on-surface-variant">S</span>
+</div>
+<!-- Sun -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<span class="text-[11px] font-headline font-bold text-on-surface">2.2k</span>
+<div class="w-full relative h-28 flex flex-col justify-end items-center">
+<div class="absolute inset-x-0 bottom-0 h-full rounded-t-xl rounded-b-lg pointer-events-none" style="background-color: rgba(255, 255, 255, 0.1);"></div>
+<div class="w-full bg-gradient-to-t from-blue-700 via-indigo-600 to-cyan-400 h-[80%] rounded-t-xl rounded-b-lg relative shadow-lg">
+<div class="absolute inset-y-0 left-0.5 w-1/3 bg-white/20 rounded-l-xl"></div>
+</div>
+</div>
+<span class="text-[10px] font-headline text-on-surface-variant">S</span>
+</div>
+</div>
+<!-- Legend -->
+<div class="flex items-center justify-center gap-6 mt-3 pt-2 border-t border-outline-variant/20">
+<div class="flex items-center gap-2">
+<div class="size-2.5 rounded-full bg-tertiary"></div>
+<span class="text-[11px] font-headline text-on-surface-variant/70">Intake</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="size-2.5 rounded-full bg-surface-container-high border border-outline-variant/60"></div>
+<span class="text-[11px] font-headline text-on-surface-variant/70">Target</span>
+</div>
+</div>
+</div><div class="flex items-center justify-between mb-4">
+<h2 class="text-lg font-headline font-bold tracking-tight text-on-surface">Analytics</h2>
+</div>
+<!-- Period Pills -->
+<div class="flex items-center gap-2 mb-6">
+<button class="px-4 py-1.5 rounded-full text-xs font-headline font-semibold bg-tertiary text-on-tertiary transition-all">7D</button>
+<button class="px-4 py-1.5 rounded-full text-xs font-headline font-medium bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-all">30D</button>
+<button class="px-4 py-1.5 rounded-full text-xs font-headline font-medium bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-all">90D</button>
+</div>
+<!-- 2x2 Stat Grid -->
+<div class="grid grid-cols-2 gap-3 mb-6">
+<!-- Stat 1: Avg Calories -->
+<div class="bg-surface-container p-4 rounded-xl flex flex-col justify-between border border-outline-variant/20">
+<span class="text-[10px] font-headline uppercase tracking-[0.1em] text-on-surface-variant/60">Avg Calories</span>
+<div class="my-2">
+<span class="text-2xl font-headline font-bold text-on-surface tracking-tight">2,050</span>
+</div>
+<div class="flex items-center gap-1 text-xs text-error">
+<span class="material-symbols-outlined text-[14px]">trending_down</span>
+<span class="">-4% vs target</span>
+</div>
+</div>
+<!-- Stat 2: Avg Protein -->
+<div class="bg-surface-container p-4 rounded-xl flex flex-col justify-between border border-outline-variant/20">
+<span class="text-[10px] font-headline uppercase tracking-[0.1em] text-on-surface-variant/60">Avg Protein</span>
+<div class="my-2">
+<span class="text-2xl font-headline font-bold text-on-surface tracking-tight">145g</span>
+</div>
+<div class="flex items-center gap-1 text-xs text-tertiary">
+<span class="material-symbols-outlined text-[14px]">check</span>
+<span class="">Goal met</span>
+</div>
+</div>
+<!-- Stat 3: Avg Carbs -->
+<div class="bg-surface-container p-4 rounded-xl flex flex-col justify-between border border-outline-variant/20">
+<span class="text-[10px] font-headline uppercase tracking-[0.1em] text-on-surface-variant/60">Avg Carbs</span>
+<div class="my-2">
+<span class="text-2xl font-headline font-bold text-on-surface tracking-tight">210g</span>
+</div>
+<div class="flex items-center gap-1 text-xs text-on-surface-variant/60">
+<span class="material-symbols-outlined text-[14px]">remove</span>
+<span class="">On track</span>
+</div>
+</div>
+<!-- Stat 4: Avg Fat -->
+<div class="bg-surface-container p-4 rounded-xl flex flex-col justify-between border border-outline-variant/20">
+<span class="text-[10px] font-headline uppercase tracking-[0.1em] text-on-surface-variant/60">Avg Fat</span>
+<div class="my-2">
+<span class="text-2xl font-headline font-bold text-on-surface tracking-tight">62g</span>
+</div>
+<div class="flex items-center gap-1 text-xs text-tertiary">
+<span class="material-symbols-outlined text-[14px]">trending_down</span>
+<span class="">Optimal range</span>
+</div>
+</div>
+</div>
+<!-- Daily Intake Comparison Section -->
+
+</div>
+<!-- Persistent Floating Bottom Nav -->
+<nav class="fixed bottom-6 inset-x-4 z-50 max-w-md mx-auto pointer-events-auto"><div class="relative flex items-center justify-between h-[68px] px-6 bg-[#16171a]/95 backdrop-blur-2xl rounded-full border border-white/5 shadow-2xl max-w-sm mx-auto"><a aria-label="Dashboard" class="flex items-center justify-center size-10 text-[#71717a] hover:text-white transition-colors" href="#"><svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect></svg></a><a aria-label="Analytics" class="flex items-center justify-center size-10 text-[#71717a] hover:text-white transition-colors" href="#"><svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"></path><path d="M5 16l4-5 4 3 6-8"></path><path d="M19 6h-4"></path><path d="M19 6v4"></path><path d="M5 20v-2"></path><path d="M9 20v-5"></path><path d="M13 20v-4"></path><path d="M17 20v-8"></path></svg></a><div class="size-12"></div><a aria-label="Meals" class="flex items-center justify-center size-10 text-[#71717a] hover:text-white transition-colors" href="#"><svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2v5a3 3 0 0 1-3 3h-1"></path><path d="M14 10l7 12"></path><path d="M18 22L9.5 9.5"></path><path d="M7 2a3 3 0 0 0-3 3c0 2 1.5 3.5 3 4.5"></path><path d="M4 22l6.5-6.5"></path></svg></a><a aria-label="Settings" class="flex items-center justify-center size-10 text-[#a78bfa] hover:text-primary-fixed transition-colors" href="#"><svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg></a></div><div class="absolute left-1/2 -translate-x-1/2 -top-5"><a aria-label="Scan Barcode" class="flex items-center justify-center size-16 rounded-full bg-[#a78bfa] text-[#09090b] shadow-xl hover:scale-105 active:scale-95 transition-transform ring-4 ring-[#09090b]/40" href="#"><svg class="size-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2" stroke-width="2.5"></path><path d="M17 3h2a2 2 0 0 1 2 2v2" stroke-width="2.5"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2" stroke-width="2.5"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2" stroke-width="2.5"></path><path d="M7 7.5v9" stroke-width="2.4"></path><path d="M10 7.5v9" stroke-width="1.8"></path><path d="M12.5 7.5v9" stroke-width="2.4"></path><path d="M15 7.5v9" stroke-width="1.4"></path><path d="M17 7.5v9" stroke-width="2.2"></path></svg></a></div></nav>
+</main>
+
+
+
+
+
+
+
+
+
+
+</body></html>

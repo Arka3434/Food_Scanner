@@ -1,0 +1,193 @@
+<!DOCTYPE html><html class="dark" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><title>Food Detail</title><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{width:100%;margin:0;padding:0;min-height:100%;background-color:#09090b;}body{overscroll-behavior-y:none;-webkit-font-smoothing:antialiased;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-container-low": "#0f0f12", "on-secondary-fixed-variant": "#3f3f46", "secondary-fixed-dim": "#71717a", "secondary-container": "#27272a", "surface-container-lowest": "#09090b", "tertiary": "#34d399", "on-secondary": "#09090b", "on-surface-variant": "#a1a1aa", "on-error-container": "#fca5a5", "surface": "#0c0c0f", "inverse-surface": "#fafafa", "tertiary-container": "#065f46", "tertiary-fixed-dim": "#6ee7b7", "on-secondary-container": "#a1a1aa", "outline": "#52525b", "on-tertiary-container": "#bbf7d0", "background": "#09090b", "tertiary-fixed": "#bbf7d0", "secondary-fixed": "#a1a1aa", "surface-container-high": "#18181b", "on-primary": "#0a0012", "surface-dim": "#0c0c0f", "surface-container-highest": "#1e1e22", "secondary": "#71717a", "surface-tint": "#a78bfa", "on-primary-fixed": "#2e1065", "inverse-primary": "#5b21b6", "on-surface": "#fafafa", "error": "#ef4444", "error-container": "#3b1111", "on-background": "#fafafa", "surface-variant": "#18181b", "primary-fixed-dim": "#c4b5fd", "primary-fixed": "#ede9fe", "on-secondary-fixed": "#18181b", "surface-container": "#121215", "on-tertiary": "#001a12", "primary-container": "#7c3aed", "outline-variant": "#27272a", "surface-bright": "#18181b", "on-tertiary-fixed-variant": "#047857", "inverse-on-surface": "#09090b", "on-primary-fixed-variant": "#5b21b6", "primary": "#a78bfa", "on-primary-container": "#ede9fe", "on-tertiary-fixed": "#003318", "on-error": "#1a0000" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: {}, fontFamily: { "headline": ["Geist", "sans-serif"], "display": ["Geist", "sans-serif"], "body": ["Geist", "sans-serif"], "label": ["Geist", "sans-serif"] }, fontSize: {} } } }</script></head><body class="bg-background font-body text-on-surface min-h-screen flex flex-col selection:bg-primary selection:text-on-primary"><header class="fixed top-0 inset-x-0 z-50 bg-surface/80 backdrop-blur-xl pt-safe"><div class="h-16 px-4 flex items-center justify-between"><div class="flex items-center gap-1"><button class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface hover:text-primary transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">arrow_back_ios_new</span></button><h1 class="text-[17px] font-headline font-semibold tracking-[-0.02em] text-on-surface">Food Detail</h1></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center mr-1"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-safe bg-surface"><div class="flex flex-col w-full relative select-none">
+<!-- Dimmed Dashboard Backdrop Simulation -->
+<div class="w-full px-5 pt-3 pb-8 opacity-35 pointer-events-none transition-opacity duration-300" id="dimmed-dashboard">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2">
+<span class="text-xs font-semibold uppercase tracking-widest text-on-surface-variant">Daily Nutrition</span>
+</div>
+<span class="text-xs text-on-surface-variant font-mono">1,840 / 2,400 kcal</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-highest overflow-hidden mb-5">
+<div class="h-full bg-primary rounded-full w-3/4"></div>
+</div>
+<div class="grid grid-cols-3 gap-2.5">
+<div class="bg-surface-container rounded-lg p-3">
+<span class="text-[11px] text-on-surface-variant block mb-1">PROTEIN</span>
+<span class="text-sm font-semibold text-on-surface">112g</span>
+</div>
+<div class="bg-surface-container rounded-lg p-3">
+<span class="text-[11px] text-on-surface-variant block mb-1">CARBS</span>
+<span class="text-sm font-semibold text-on-surface">148g</span>
+</div>
+<div class="bg-surface-container rounded-lg p-3">
+<span class="text-[11px] text-on-surface-variant block mb-1">FATS</span>
+<span class="text-sm font-semibold text-on-surface">42g</span>
+</div>
+</div>
+</div>
+<!-- Dim overlay backdrop tap to close -->
+<div class="fixed inset-0 bg-black/60 backdrop-blur-[2px] z-10 transition-opacity" onclick="dismissSheet()"></div>
+<!-- iOS Bottom Sheet Container (85% height feel, 28px top radius, #1A1C19 surface) -->
+<div class="relative z-20 w-full rounded-t-[28px] bg-[#1A1C19] text-on-surface shadow-2xl transition-transform duration-300 ease-out flex flex-col overflow-hidden pb-6" id="meal-bottom-sheet">
+<!-- Grab Handle Bar -->
+<div class="w-full flex items-center justify-center pt-3 pb-2 cursor-grab active:cursor-grabbing" id="sheet-handle">
+<div class="w-10 h-1 rounded-full bg-white/20"></div>
+</div>
+<!-- Top 40% Full-bleed Hero Photo with Tag -->
+<div class="relative w-full h-56 shrink-0 overflow-hidden bg-surface-container-lowest">
+<img class="w-full h-full object-cover object-center" data-alt="Artisanal Salmon Poke Bowl served in a rustic dark ceramic bowl, featuring succulent cubes of fresh sashimi-grade Atlantic salmon, vibrant green edamame beans, ripe sliced avocado, steamed seasoned sushi rice, toasted black sesame seeds, with dramatic directional moody lighting and rich textures against a clean dark tabletop" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBs44aoqmWzObZMj0cJtzpNoxJSf45Lqy_d5hXmGuOIvtS142HcFjr4pKGWk3I4qGMe6KRJikzp4CcvX1tYysyr6uREwz0obOjrb8xjSpE4LM7UhncO2dtfw6BcYN0_NQeD1-loSLjH7FflyqsQ3fIn_8pcdIGDH4ocfUZKV9fmX3VqcrniqHHiQpsouv_FDr-wiFbhNqpGG0cAPTmhelYDuIu_FfnzTD2beg8N6gFi7yOBMhmdCSA">
+<!-- Frosted Glass Pill: LUNCH -->
+<div class="absolute top-3.5 right-3.5 bg-black/45 backdrop-blur-md px-3 py-1 rounded-full flex items-center shadow-md">
+<span class="text-[11px] font-semibold tracking-wider text-white uppercase">LUNCH</span>
+</div>
+</div>
+<!-- Food Items Breakdown (Hairline dividers at 8% white opacity) -->
+<div class="w-full px-5 py-2 flex flex-col">
+<!-- Item Row 1 -->
+<div class="flex items-center justify-between py-3">
+<div class="flex items-center gap-3 min-w-0">
+<img class="w-9 h-9 rounded-full object-cover shrink-0 bg-surface-container-high" data-alt="Macro close-up shot of raw, fresh, glistening Atlantic salmon sashimi cubes with white marbling against a dark slate background, professional culinary photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBF6MMASsEDXY-1_6K1yym6Tycwad5lvUFpe-93NAgw1O9fmyD6F6nPuxwtjAhpWLtMaIF_Ryc0lcmQclukoHrR23WV8muFet-vcTeLqBdgiRTNuzepWr7VoCwuFHlN2a4sqtkKKNZSlARnR2_DOtsDJl650r3DRNw7AL2H7_DS5t4xrXoG9MKLk5vPyoYe0t2Kuz4xmnfqFkCbGmrFkNrQxJe5zKw-T_vbFwCAgFyHjxyPzFd-bIw">
+<div class="flex flex-col min-w-0">
+<span class="text-[15px] font-medium text-white truncate tracking-[-0.01em]">Atlantic Salmon</span>
+<span class="text-[12px] text-white/50 leading-none mt-0.5">180 g</span>
+</div>
+</div>
+<div class="flex items-baseline gap-2 shrink-0 pl-2">
+<div class="text-right">
+<span class="text-[13px] font-medium text-white">360</span>
+<span class="text-[9px] font-semibold text-white/50 uppercase ml-0.5">kcal</span>
+</div>
+<div class="text-right">
+<span class="text-[13px] font-medium text-white">38</span>
+<span class="text-[9px] font-semibold text-white/50 uppercase">P</span>
+</div>
+<div class="text-right">
+<span class="text-[13px] font-medium text-white">0</span>
+<span class="text-[9px] font-semibold text-white/50 uppercase">C</span>
+</div>
+<div class="text-right">
+<span class="text-[13px] font-medium text-white">22</span>
+<span class="text-[9px] font-semibold text-white/50 uppercase">F</span>
+</div>
+</div>
+</div>
+<!-- Hairline Divider -->
+<div class="w-full h-[1px] bg-white/[0.08]"></div>
+<!-- Item Row 2 -->
+<div class="flex items-center justify-between py-3">
+<div class="flex items-center gap-3 min-w-0">
+<img class="w-9 h-9 rounded-full object-cover shrink-0 bg-surface-container-high" data-alt="Overhead close-up of perfectly cooked Japanese short-grain sushi rice seasoned with rice vinegar, glistening softly under dim studio light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH6j3x1m0W2PBiV3Y7hZqG3uuc1PS7-BlCGWxtCr1wMm0pOCaJzVvP-kk6IpAcmrHQUngteNsKUJovVdSOFPhmqC8K9o0SGBtdncYVEtBjODfdbuhLGP-jOcvh3GcsPJnET3Qh2UjqCbeTJfIqEpz5eLZtWMZ_kCFH90TucGYTIyiEneCJitI7thJetblG0YWB-VpZMpKqUvX97XJG-V7fZOO5oXjfNUA5iPmh1zEa7HUo2F2TU8E">
+<div class="flex flex-col min-w-0">
+<span class="text-[15px] font-medium text-white truncate tracking-[-0.01em]">Sushi Rice</span>
+<span class="text-[12px] text-white/50 leading-none mt-0.5">120 g</span>
+</div>
+</div>
+<div class="flex items-baseline gap-2 shrink-0 pl-2">
+<div class="text-right">
+<span class="text-[13px] font-medium text-white">160</span>
+<span class="text-[9px] font-semibold text-white/50 uppercase ml-0.5">kcal</span>
+</div>
+<div class="text-right">
+<span class="text-[13px] font-medium text-white">3</span>
+<span class="text-[9px] font-semibold text-white/50 uppercase">P</span>
+</div>
+<div class="text-right">
+<span class="text-[13px] font-medium text-white">35</span>
+<span class="text-[9px] font-semibold text-white/50 uppercase">C</span>
+</div>
+<div class="text-right">
+<span class="text-[13px] font-medium text-white">0.5</span>
+<span class="text-[9px] font-semibold text-white/50 uppercase">F</span>
+</div>
+</div>
+</div>
+<!-- Hairline Divider -->
+<div class="w-full h-[1px] bg-white/[0.08]"></div>
+<!-- Item Row 3 -->
+<div class="flex items-center justify-between py-3">
+<div class="flex items-center gap-3 min-w-0">
+<img class="w-9 h-9 rounded-full object-cover shrink-0 bg-surface-container-high" data-alt="Vibrant sliced ripe Haas avocado and shelled steamed green edamame beans arranged cleanly on a matte dark dish with sea salt specks" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvVxysI1hkcDDyii0iJHS-mLSQ7uRiVNCuD0x6Q6r1AVdodM6s754WfLjsLWhneRa2RlV1D2T_WvRVkZiOwQSNmhOYAqOGCey8MSgmExuPrjoDSFCbR1xza-p2-FnWlhge_ubywfZ4FKQBFcsFqwk2plGZ3m8KhNG54pbD73h-WrTMQQWzm-L2NqXkQpkw_ozSJsEd0SnDaEIMV9F7Kb4znNdY-Zy6RcUjWh0sATG-dxjy1EF995o">
+<div class="flex flex-col min-w-0">
+<span class="text-[15px] font-medium text-white truncate tracking-[-0.01em]">Avocado &amp; Edamame</span>
+<span class="text-[12px] text-white/50 leading-none mt-0.5">80 g</span>
+</div>
+</div>
+<div class="flex items-baseline gap-2 shrink-0 pl-2">
+<div class="text-right">
+<span class="text-[13px] font-medium text-white">130</span>
+<span class="text-[9px] font-semibold text-white/50 uppercase ml-0.5">kcal</span>
+</div>
+<div class="text-right">
+<span class="text-[13px] font-medium text-white">4</span>
+<span class="text-[9px] font-semibold text-white/50 uppercase">P</span>
+</div>
+<div class="text-right">
+<span class="text-[13px] font-medium text-white">6</span>
+<span class="text-[9px] font-semibold text-white/50 uppercase">C</span>
+</div>
+<div class="text-right">
+<span class="text-[13px] font-medium text-white">10</span>
+<span class="text-[9px] font-semibold text-white/50 uppercase">F</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Visually Separated Total Block (#222521) -->
+<div class="mx-4 mt-2 mb-4 bg-[#222521] rounded-2xl p-4 flex flex-col">
+<div class="flex items-baseline justify-between">
+<span class="text-[10px] font-semibold uppercase tracking-widest text-white/50">TOTAL</span>
+<div class="flex items-baseline gap-1.5">
+<span class="text-[56px] font-extrabold tracking-tight text-white leading-none">650</span>
+<span class="text-sm font-semibold tracking-wider text-white/60">KCAL</span>
+</div>
+</div>
+<!-- Hairline divider inside card -->
+<div class="w-full h-[1px] bg-white/[0.08] my-3"></div>
+<!-- Summed Macros -->
+<div class="grid grid-cols-3 divide-x divide-white/[0.08] text-center">
+<div class="flex flex-col items-center">
+<span class="text-[20px] font-semibold text-white tracking-tight leading-none">45g</span>
+<span class="text-[10px] uppercase font-medium text-white/50 mt-1">PROTEIN</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="text-[20px] font-semibold text-white tracking-tight leading-none">41g</span>
+<span class="text-[10px] uppercase font-medium text-white/50 mt-1">CARBS</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="text-[20px] font-semibold text-white tracking-tight leading-none">32.5g</span>
+<span class="text-[10px] uppercase font-medium text-white/50 mt-1">FAT</span>
+</div>
+</div>
+</div>
+<!-- Single Accent Action Button (Sole lime element) -->
+<div class="w-full px-4">
+<button class="w-full h-13 py-3.5 bg-[#C7F464] active:scale-[0.985] text-black font-semibold text-[16px] rounded-full transition-all duration-150 flex items-center justify-center tracking-tight shadow-md" onclick="dismissSheet()" type="button">
+        Done
+      </button>
+</div>
+</div>
+</div>
+<script>
+  function dismissSheet() {
+    const sheet = document.getElementById('meal-bottom-sheet');
+    const dashboard = document.getElementById('dimmed-dashboard');
+    if (sheet) {
+      sheet.style.transform = 'translateY(100%)';
+      sheet.style.opacity = '0';
+    }
+    if (dashboard) {
+      dashboard.style.opacity = '1';
+    }
+    setTimeout(() => {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        if (sheet) {
+          sheet.style.transform = 'translateY(0)';
+          sheet.style.opacity = '1';
+        }
+      }
+    }, 220);
+  }
+</script></main></body></html>

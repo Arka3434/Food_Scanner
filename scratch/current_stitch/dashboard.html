@@ -1,0 +1,205 @@
+<!DOCTYPE html><html class="dark" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><title>Dashboard</title><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{width:100%;margin:0;padding:0;min-height:100%;background-color:#09090b;}body{overscroll-behavior-y:none;-webkit-font-smoothing:antialiased;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-container-low": "#0f0f12", "on-secondary-fixed-variant": "#3f3f46", "secondary-fixed-dim": "#71717a", "secondary-container": "#27272a", "surface-container-lowest": "#09090b", "tertiary": "#34d399", "on-secondary": "#09090b", "on-surface-variant": "#a1a1aa", "on-error-container": "#fca5a5", "surface": "#0c0c0f", "inverse-surface": "#fafafa", "tertiary-container": "#065f46", "tertiary-fixed-dim": "#6ee7b7", "on-secondary-container": "#a1a1aa", "outline": "#52525b", "on-tertiary-container": "#bbf7d0", "background": "#09090b", "tertiary-fixed": "#bbf7d0", "secondary-fixed": "#a1a1aa", "surface-container-high": "#18181b", "on-primary": "#0a0012", "surface-dim": "#0c0c0f", "surface-container-highest": "#1e1e22", "secondary": "#71717a", "surface-tint": "#a78bfa", "on-primary-fixed": "#2e1065", "inverse-primary": "#5b21b6", "on-surface": "#fafafa", "error": "#ef4444", "error-container": "#3b1111", "on-background": "#fafafa", "surface-variant": "#18181b", "primary-fixed-dim": "#c4b5fd", "primary-fixed": "#ede9fe", "on-secondary-fixed": "#18181b", "surface-container": "#121215", "on-tertiary": "#001a12", "primary-container": "#7c3aed", "outline-variant": "#27272a", "surface-bright": "#18181b", "on-tertiary-fixed-variant": "#047857", "inverse-on-surface": "#09090b", "on-primary-fixed-variant": "#5b21b6", "primary": "#a78bfa", "on-primary-container": "#ede9fe", "on-tertiary-fixed": "#003318", "on-error": "#1a0000" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: {}, fontFamily: { "headline": ["Geist", "sans-serif"], "display": ["Geist", "sans-serif"], "body": ["Geist", "sans-serif"], "label": ["Geist", "sans-serif"] }, fontSize: {} } } }</script></head><body class="bg-background font-body text-on-surface min-h-screen flex flex-col selection:bg-primary selection:text-on-primary"><header class="fixed top-0 inset-x-0 z-50 bg-surface/80 backdrop-blur-xl pt-safe"><div class="h-16 px-5 flex items-center justify-between"><div class="flex items-center gap-3"><span class="text-[17px] font-headline font-semibold tracking-[-0.02em] text-on-surface">Dashboard</span></div><div class="flex items-center gap-2"><button class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[22px]">notifications</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-1"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-28 bg-surface"><div class="flex flex-col w-full px-4 pt-2 pb-10 space-y-6 select-none bg-[#0E0F0D]">
+<!-- Top Bar Stats -->
+<div class="flex items-center justify-between px-1">
+<span class="text-[13px] font-mono tracking-tight font-medium text-white/50 uppercase">Wed 16</span>
+<div class="flex items-center gap-1 bg-[#1A1C19] px-2.5 py-1 rounded-full">
+<span class="material-symbols-outlined text-[16px] text-[#C7F464]" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<span class="text-[13px] font-mono font-semibold text-[#C7F464]">12</span>
+</div>
+</div>
+<!-- Hero Interactive Arc Ring -->
+<div class="relative flex flex-col items-center justify-center pt-2 pb-4">
+<!-- Soft radial glow -->
+<div class="absolute w-[240px] h-[240px] rounded-full bg-[#C7F464]/10 blur-[50px] pointer-events-none -translate-y-2"></div>
+<div class="relative w-[280px] h-[260px] flex items-center justify-center">
+<svg class="w-[280px] h-[280px] -rotate-90 transform overflow-visible" viewBox="0 0 280 280">
+<!-- Track Ring -->
+<circle cx="140" cy="140" fill="none" r="115" stroke="#1F221D" stroke-dasharray="540 722" stroke-dashoffset="-90" stroke-linecap="round" stroke-width="10"></circle>
+<!-- Active Progress Arc -->
+<circle class="transition-all duration-500 ease-out" cx="140" cy="140" fill="none" id="hero-arc" r="115" stroke="#C7F464" stroke-dasharray="540 722" stroke-dashoffset="190" stroke-linecap="round" stroke-width="10"></circle>
+</svg>
+<!-- Center Typography -->
+<div class="absolute inset-0 flex flex-col items-center justify-center -translate-y-3">
+<span class="text-[88px] font-headline font-semibold leading-none tracking-[-0.03em] text-[#fafafa]" id="hero-value">
+          120
+        </span>
+<span class="text-[10px] tracking-[0.14em] font-mono uppercase text-[#fafafa]/50 mt-2 font-medium" id="hero-label">
+          PROTEIN LEFT (G)
+        </span>
+</div>
+</div>
+<!-- Mutually Exclusive Macro Rows -->
+<div class="w-full max-w-[340px] mt-1 bg-[#141613] rounded-2xl p-2 flex flex-col space-y-1">
+<!-- Row: Calories (Toggleable) -->
+<button class="metric-row group w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-all text-white/20 hover:text-white/40" onclick="selectMetric('CALORIES', 680, 2400, 'CALORIES LEFT', this)">
+<span class="text-[10px] font-mono tracking-[0.12em] font-semibold uppercase">CALORIES</span>
+<span class="text-[13px] font-mono font-medium">1,720 / 2,400 kcal</span>
+</button>
+<div class="h-[1px] w-full bg-white/[0.04]"></div>
+<!-- Row: Protein (Initially Selected) -->
+<button class="metric-row active-macro group w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-all text-[#C7F464] bg-[#1C2017]" onclick="selectMetric('PROTEIN', 120, 160, 'PROTEIN (G) LOGGED', this)">
+<span class="text-[10px] font-mono tracking-[0.12em] font-semibold uppercase">PROTEIN</span>
+<span class="text-[13px] font-mono font-medium">120 / 160g</span>
+</button>
+<div class="h-[1px] w-full bg-white/[0.04]"></div>
+<!-- Row: Carbs -->
+<button class="metric-row group w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-all text-white/20 hover:text-white/40" onclick="selectMetric('CARBS', 180, 220, 'CARBS (G) LOGGED', this)">
+<span class="text-[10px] font-mono tracking-[0.12em] font-semibold uppercase">CARBS</span>
+<span class="text-[13px] font-mono font-medium">180 / 220g</span>
+</button>
+<div class="h-[1px] w-full bg-white/[0.04]"></div>
+<!-- Row: Fat -->
+<button class="metric-row group w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-all text-white/20 hover:text-white/40" onclick="selectMetric('FAT', 45, 65, 'FAT (G) LOGGED', this)">
+<span class="text-[10px] font-mono tracking-[0.12em] font-semibold uppercase">FAT</span>
+<span class="text-[13px] font-mono font-medium">45 / 65g</span>
+</button>
+</div>
+</div>
+<!-- Water Tracking Full-Width Band -->
+<div class="relative w-full overflow-hidden rounded-[28px] bg-[#1A1C19] p-5 shadow-inner">
+<!-- Liquid Wave Graphic Overlay at 80% fill -->
+<div class="absolute inset-x-0 bottom-0 top-[20%] pointer-events-none overflow-hidden rounded-b-[28px]">
+<div class="absolute inset-0 bg-gradient-to-t from-[#C7F464]/20 via-[#C7F464]/10 to-transparent"></div>
+<!-- Wave meniscus effect -->
+<svg class="absolute top-0 inset-x-0 w-full h-3 text-[#C7F464]/25 fill-current" preserveAspectRatio="none" viewBox="0 0 400 12">
+<path d="M0,6 C150,14 250,-2 400,6 L400,12 L0,12 Z"></path>
+</svg>
+</div>
+<!-- Content -->
+<div class="relative z-10 flex flex-col justify-between space-y-4">
+<div class="flex items-baseline justify-between">
+<div>
+<div class="flex items-baseline gap-1">
+<span class="text-[56px] font-headline font-semibold leading-none tracking-tight text-white" id="water-val">2.8</span>
+<span class="text-[20px] font-headline font-medium text-white/40">L</span>
+</div>
+<span class="text-[10px] font-mono tracking-[0.12em] uppercase text-white/40 font-medium">OF 3.5L GOAL</span>
+</div>
+<div class="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center text-[#C7F464]">
+<span class="material-symbols-outlined text-[20px]">water_drop</span>
+</div>
+</div>
+<!-- Quick Add Pills -->
+<div class="flex items-center gap-2 pt-1">
+<button class="flex-1 py-2 rounded-full bg-white/[0.04] active:bg-[#C7F464]/20 transition-colors flex items-center justify-center text-white/70 hover:text-white" onclick="addWater(0.25)">
+<span class="text-[11px] font-mono font-medium">+250ml</span>
+</button>
+<button class="flex-1 py-2 rounded-full bg-white/[0.04] active:bg-[#C7F464]/20 transition-colors flex items-center justify-center text-white/70 hover:text-white" onclick="addWater(0.50)">
+<span class="text-[11px] font-mono font-medium">+500ml</span>
+</button>
+<button class="flex-1 py-2 rounded-full bg-white/[0.04] active:bg-[#C7F464]/20 transition-colors flex items-center justify-center text-white/70 hover:text-white" onclick="addWater(0.75)">
+<span class="text-[11px] font-mono font-medium">+750ml</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Today's Meals Section -->
+<div class="flex flex-col space-y-5"><!-- BREAKFAST -->
+<div class="flex flex-col space-y-2">
+  <div class="flex items-center justify-between px-1">
+    <span class="text-[10px] font-mono tracking-[0.12em] font-semibold text-white/40 uppercase">BREAKFAST</span>
+    <span class="text-[10px] font-mono tracking-[0.08em] text-white/40 font-semibold">420 KCAL</span>
+  </div>
+  <div class="flex flex-col rounded-2xl bg-[#141613] overflow-hidden">
+    <div class="flex items-center justify-between p-2">
+      <div class="flex items-center gap-3">
+        <img alt="Greek Yogurt &amp; Berries" class="w-11 h-11 rounded-xl object-cover bg-black/40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4P02ArSLrKLbfADdthrYdTevAhSmL3UIKASW5saJ3uNg2A5AQcKM1TXKTpf5EGcsEDzR0JoDL14NTZWn8gMTPTuk8KgSwsQGhIKCwgie7H2enOMMK_JEdZDOl_Vqao4i8ed0S5j8erN6YopmDpsw2K9iVND3NaWocvwP_Kvkocc93a4ku4sc27TXh6tCPk9LSJqUp5s9qGOmGnDMg5cVMX0kumC2BVEdbKDvz16ideJUNqJGSlHg">
+        <span class="text-[15px] font-medium text-white/90">Greek Yogurt &amp; Berries</span>
+      </div>
+      <span class="text-[13px] font-mono text-white/40 pr-2">320 kcal</span>
+    </div>
+    <div class="h-[1px] w-full bg-white/[0.08]"></div>
+    <div class="flex items-center justify-between p-2">
+      <div class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-xl bg-[#1F221D] flex items-center justify-center text-white/40">
+          <span class="material-symbols-outlined text-[20px]">coffee</span>
+        </div>
+        <span class="text-[15px] font-medium text-white/90">Espresso</span>
+      </div>
+      <span class="text-[13px] font-mono text-white/40 pr-2">100 kcal</span>
+    </div>
+  </div>
+</div>
+
+<!-- LUNCH -->
+<div class="flex flex-col space-y-2">
+  <div class="flex items-center justify-between px-1">
+    <span class="text-[10px] font-mono tracking-[0.12em] font-semibold text-white/40 uppercase">LUNCH</span>
+    <span class="text-[10px] font-mono tracking-[0.08em] text-white/40 font-semibold">650 KCAL</span>
+  </div>
+  <div class="flex flex-col rounded-2xl bg-[#141613] overflow-hidden">
+    <div class="flex items-center justify-between p-2">
+      <div class="flex items-center gap-3">
+        <img alt="Salmon Poke Bowl" class="w-11 h-11 rounded-xl object-cover bg-black/40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCb_PkV6KfsGmmLp2_GrhujYAwhevQuvDn3BI4DF3e65L592SEMHHEsZRfEzBb08wHJRIV-ceB-bU4L12c4CzH4eIYQSqrXBxm9X7nkn8-WvGhcZeE6dYQycnzOGBwcV0KsWMg-iOew9A5kw-EQlu9grXBX_nr_qcvQxLCCM4uAQGdWlqbBH-UtGKPTfV7n8fRqyXofoJj1vPtbu0us4hv2EHqRCeeML-_-YsOz7yLnxtZ87OLAq_8">
+        <span class="text-[15px] font-medium text-white/90">Salmon Poke Bowl</span>
+      </div>
+      <span class="text-[13px] font-mono text-white/40 pr-2">650 kcal</span>
+    </div>
+  </div>
+</div>
+
+<!-- DINNER -->
+<div class="flex flex-col space-y-2">
+  <div class="flex items-center justify-between px-1">
+    <span class="text-[10px] font-mono tracking-[0.12em] font-semibold text-white/40 uppercase">DINNER</span>
+    <span class="text-[10px] font-mono tracking-[0.08em] text-white/40 font-semibold">550 KCAL</span>
+  </div>
+  <div class="flex flex-col rounded-2xl bg-[#141613] overflow-hidden">
+    <div class="flex items-center justify-between p-2">
+      <div class="flex items-center gap-3">
+        <img alt="Grilled Chicken Bowl" class="w-11 h-11 rounded-xl object-cover bg-black/40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFS5WPydXzAZ1KeA6_3Gl1TKbxe8UWdmB32lMKPUhHFTX4o4gvavtoiuq5vWdcZjpwBDrWXcljNA8RywqqxTmaWXlti9ORguXZebhZ5JGDkiuBDUb2vzSDgmB5x_BUpt8LZCHdSym8OQ-W7JGRTzXk0WXevZW32NldDcdXbhJmIrOtgyd3S2JqL6ODfl6s_kocDgQ6QgyPhWr8ysXrQxchVCBDz0AsnS5p6QcjOAyOujotThclJ4w">
+        <span class="text-[15px] font-medium text-white/90">Grilled Chicken Bowl</span>
+      </div>
+      <span class="text-[13px] font-mono text-white/40 pr-2">550 kcal</span>
+    </div>
+  </div>
+</div>
+
+<!-- SNACK -->
+<div class="flex flex-col space-y-2">
+  <div class="flex items-center justify-between px-1">
+    <span class="text-[10px] font-mono tracking-[0.12em] font-semibold text-white/40 uppercase">SNACK</span>
+    <span class="text-[10px] font-mono tracking-[0.08em] text-white/40 font-semibold">0 KCAL</span>
+  </div>
+  <button class="w-full h-14 rounded-2xl bg-[#141613]/50 flex items-center justify-center text-white/20 hover:text-[#C7F464] hover:bg-[#141613] transition-all group border border-dashed border-white/10">
+    <span class="material-symbols-outlined text-[20px] font-extralight group-hover:scale-110 transition-transform">add</span>
+  </button>
+</div></div>
+</div>
+<script>
+  function selectMetric(name, current, total, label, btn) {
+    const valEl = document.getElementById('hero-value');
+    const labelEl = document.getElementById('hero-label');
+    const arcEl = document.getElementById('hero-arc');
+    
+    // Update active highlight style on rows
+    document.querySelectorAll('.metric-row').forEach(row => {
+      row.classList.remove('text-[#C7F464]', 'bg-[#1C2017]', 'active-macro');
+      row.classList.add('text-white/20');
+    });
+    btn.classList.remove('text-white/20');
+    btn.classList.add('text-[#C7F464]', 'bg-[#1C2017]', 'active-macro');
+
+    // Update typography
+    valEl.textContent = current;
+    labelEl.textContent = label;
+
+    // Calculate arc dashoffset (Full stroke span is ~540 for 270deg open ring)
+    const ratio = Math.min(current / total, 1);
+    const maxOffset = 540;
+    const newOffset = maxOffset - (ratio * (maxOffset * 0.72));
+    arcEl.setAttribute('stroke-dashoffset', newOffset.toString());
+  }
+
+  function addWater(amount) {
+    const el = document.getElementById('water-val');
+    let current = parseFloat(el.textContent) || 0;
+    let updated = (current + amount).toFixed(1);
+    el.textContent = updated;
+  }
+</script></main><div class="fixed bottom-0 inset-x-0 z-50 pointer-events-none pb-safe"><div class="px-4 pb-4"><nav class="pointer-events-auto relative max-w-[358px] mx-auto h-[64px] rounded-full bg-surface-container/90 backdrop-blur-2xl shadow-[0_12px_32px_rgba(0,0,0,0.6)] flex items-center justify-between px-2.5" data-active-classes="text-on-surface"><a aria-current="page" class="flex flex-col items-center justify-center w-12 h-12 rounded-full transition-all duration-150 text-white" data-path="dashboard" href="#"><svg class="w-6 h-6 fill-none stroke-current" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><rect height="6" rx="1" width="6" x="3.5" y="3.5"></rect><rect height="6" rx="1" width="6" x="14.5" y="3.5"></rect><rect height="6" rx="1" width="6" x="14.5" y="14.5"></rect><rect height="6" rx="1" width="6" x="3.5" y="14.5"></rect></svg><span class="sr-only">Dashboard</span></a><a class="flex flex-col items-center justify-center w-12 h-12 rounded-full text-white/40 hover:text-white transition-all duration-150" data-path="analytics" href="#"><svg class="w-6 h-6 fill-none stroke-current" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19h16"></path><path d="M6 19v-4"></path><path d="M10 19v-7"></path><path d="M14 19v-9"></path><path d="M18 19v-13"></path><path d="M5 14l4.5-4.5 4 3 5.5-6.5"></path><polyline points="15 6 19 6 19 10"></polyline></svg><span class="sr-only">Analytics</span></a><div class="relative flex items-center justify-center w-14"><a class="absolute -top-7 w-14 h-14 rounded-full bg-[#A78BFA] text-[#09090b] flex items-center justify-center shadow-[0_8px_24px_rgba(167,139,250,0.45)] active:scale-95 transition-transform" data-path="barcode-scan" href="#"><svg class="w-7 h-7 fill-none stroke-[#09090b]" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><line stroke-width="2" x1="8" x2="8" y1="8" y2="16"></line><line stroke-width="1.5" x1="10.5" x2="10.5" y1="8" y2="16"></line><line stroke-width="2.5" x1="13.5" x2="13.5" y1="8" y2="16"></line><line stroke-width="1.5" x1="16" x2="16" y1="8" y2="16"></line></svg><span class="sr-only">Scan Barcode</span></a></div><a class="flex flex-col items-center justify-center w-12 h-12 rounded-full text-white/40 hover:text-white transition-all duration-150" data-path="food-log" href="#"><svg class="w-6 h-6 fill-none stroke-current" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4l16 16"></path><path d="M20 4l-7 7"></path><path d="M9 15l-5 5"></path><path d="M17.5 2.5a2.5 2.5 0 0 1 3.5 3.5l-2.5 2.5-3.5-3.5 2.5-2.5z"></path><path d="M2 6.5C3.2 4 6 3 7 4.5c1 1.5.5 3-1 4.5"></path><path d="M3.5 5l2 2"></path></svg><span class="sr-only">Food Log</span></a><a class="flex flex-col items-center justify-center w-12 h-12 rounded-full text-[#A78BFA] transition-all duration-150" data-path="settings-profile" href="#"><svg class="w-6 h-6 fill-none stroke-current" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg><span class="sr-only">Settings</span></a></nav></div></div>
+
+
+
+</body></html>

@@ -6,53 +6,54 @@ export const AppHeader: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { userProfile } = useNutrition();
+  const path = location.pathname;
 
-  const getHeaderInfo = () => {
-    switch (location.pathname) {
-      case '/scan':
-        return { subtitle: 'Live AI Vision', title: 'Food Scanner' };
-      case '/log':
-        return { subtitle: 'Daily Intake', title: 'Food Log & Search' };
-      case '/progress':
-        return { subtitle: 'Analytics', title: 'Progress & Trends' };
-      case '/profile':
-        return { subtitle: 'Settings', title: 'Profile & Goals' };
-      case '/':
-      default:
-        return { subtitle: 'Daily Overview', title: `Hello, ${userProfile.name.split(' ')[0]}` };
-    }
-  };
+  // Header is omitted on onboarding, scanner, meal detail, and food log (food log has its own header)
+  if (
+    path === '/splash' ||
+    path.startsWith('/setup') ||
+    path === '/scan' ||
+    path.startsWith('/meal') ||
+    path === '/log'
+  ) {
+    return null;
+  }
 
-  const { subtitle, title } = getHeaderInfo();
+  const title = path === '/profile' ? 'Profile' : 'Dashboard';
 
   return (
-    <header className="sticky top-0 z-50 bg-surface/85 backdrop-blur-xl border-b border-surface-container-high/60 px-space-lg py-space-sm pt-safe shadow-sm">
-      <div className="flex items-center justify-between max-w-2xl mx-auto">
-        <div className="flex flex-col">
-          <span className="text-body-sm text-outline font-medium tracking-wide uppercase">
-            {subtitle}
-          </span>
-          <h1 className="text-headline-sm font-headline text-on-surface font-bold leading-tight">
+    <header className="sticky top-0 inset-x-0 z-30 bg-[#09090b]/80 backdrop-blur-xl pt-safe border-b border-white/[0.04] max-w-md mx-auto w-full select-none">
+      <div className="h-16 px-5 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <span className="text-[17px] font-headline font-semibold tracking-[-0.02em] text-white">
             {title}
-          </h1>
+          </span>
         </div>
 
-        <div className="flex items-center gap-space-sm">
-          <button 
-            type="button"
-            className="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors"
-            title="Notifications"
-          >
-            <span className="material-symbols-outlined text-[20px]">notifications</span>
-          </button>
+        <div className="flex items-center gap-2">
+          {title === 'Dashboard' && (
+            <button
+              type="button"
+              aria-label="Notifications"
+              onClick={() => alert('No new notifications')}
+              className="w-10 h-10 flex items-center justify-center rounded-full text-[#a1a1aa] hover:text-white transition-colors"
+            >
+              <span className="material-symbols-outlined text-[22px]">notifications</span>
+            </button>
+          )}
 
           <button
             type="button"
+            aria-label="User Profile"
             onClick={() => navigate('/profile')}
-            className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-headline font-bold text-sm shadow-sm hover:bg-primary-container transition-colors"
-            title="View Profile"
+            className="w-8 h-8 rounded-full bg-[#C7F464] text-[#09090b] flex items-center justify-center ml-1 active:scale-95 transition-transform"
           >
-            {userProfile.name.charAt(0)}
+            <span
+              className="material-symbols-outlined text-[#09090b] text-[18px]"
+              style={{ fontVariationSettings: "'FILL' 1" }}
+            >
+              person
+            </span>
           </button>
         </div>
       </div>

@@ -4,56 +4,34 @@
 
 @layer base {
   :root {
-    --primary: #006948;
-    --primary-accent: #059669;
-    --primary-container: #00855d;
-    --primary-fixed: #85f8c4;
-    --primary-fixed-dim: #68dba9;
-    --on-primary: #ffffff;
-    --on-primary-container: #f5fff7;
-
-    --secondary: #006c49;
-    --secondary-accent: #10b981;
-    --secondary-container: #6cf8bb;
-    --secondary-fixed: #6ffbbe;
-    --on-secondary: #ffffff;
-    --on-secondary-container: #00714d;
-    --on-secondary-fixed: #002113;
-
-    --tertiary: #505f59;
-    --tertiary-container: #687872;
-
-    --surface: #f7f9fb;
-    --surface-bright: #ffffff;
-    --surface-container-lowest: #ffffff;
-    --surface-container-low: #f2f4f6;
-    --surface-container: #eceef0;
-    --surface-container-high: #e6e8ea;
-    --surface-container-highest: #e0e3e5;
-    --surface-dim: #d8dadc;
-
-    --on-surface: #191c1e;
-    --on-surface-variant: #3d4a42;
-    --outline: #6d7a72;
-    --outline-variant: #bccac0;
-
-    --error: #ba1a1a;
-    --error-container: #ffdad6;
-    --on-error: #ffffff;
+    --background: #09090b;
+    --surface: #0c0c0f;
+    --surface-card: #0E0F0D;
+    --surface-sheet: #1A1C19;
+    --surface-item: #141613;
+    --surface-total: #222521;
+    --lime-accent: #C7F464;
+    --tertiary: #34d399;
+    --on-surface: #fafafa;
+    --on-surface-variant: #a1a1aa;
+    --outline: #52525b;
+    --outline-variant: #27272a;
+    --error: #ef4444;
   }
 
   html, body {
     width: 100%;
     margin: 0;
     padding: 0;
-    background-color: var(--surface);
-    color: var(--on-surface);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #09090b;
+    color: #fafafa;
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
   }
 
   body {
-    overscroll-behavior: none;
+    overscroll-behavior-y: none;
     min-height: 100vh;
   }
 
@@ -63,6 +41,15 @@
   .pt-safe {
     padding-top: env(safe-area-inset-top, 0px);
   }
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -77,7 +64,8 @@
 .material-symbols-outlined {
   font-variation-settings:
     'FILL' 0,
-    'wght' 400,
+    'wght' 300,
     'GRAD' 0,
     'opsz' 24;
 }
+
